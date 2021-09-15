@@ -28,46 +28,46 @@ public class ClienteModel implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID id;
 	
-	@Column(name="nome")
+	@Column(name="nome", length = 150, nullable = false)
 	private String nome;
 	
-	@Column(name="rg")
+	@Column(name="rg", length = 20, nullable = false)
 	private String rg;
 	
-	@Column(name="cpf")
+	@Column(name="cpf", length = 20, nullable = false)
 	private String cpf;
 	
-	@Column(name="data_nascimento")
+	@Column(name="data_nascimento", nullable = false)
 	private LocalDate dataNascimento;
 	
-	@Column(name="endereco")
+	@Column(name="endereco",length = 200, nullable = false)
 	private String endereco;
 	
-	@Column(name="bairro")
+	@Column(name="bairro", length = 100, nullable = false)
 	private String bairro;
 	
-	@Column(name="cidade")
+	@Column(name="cidade", length = 50, nullable = false)
 	private String cidade;
 	
-	@Column(name="uf")
+	@Column(name="uf", length = 2, nullable = false)
 	private String uf;
 	
-	@Column(name="telefone")
+	@Column(name="telefone", length = 20, nullable = false)
 	private String telefone;
 	
-	@Column(name="email")
+	@Column(name="email", length = 70, nullable = false)
 	private String email;
 	
 	@Column(name="ativo")
 	private boolean ativo;
 	
-	@Column(name="data_cadastro")
+	@Column(name="data_cadastro", nullable = false)
 	private LocalDate data_cadastro;
 	
-	@Column(name="data_atualizacao")
+	@Column(name="data_atualizacao", nullable = false)
 	private LocalDate data_atualizacao;
 
-	@Column(name="url_imagem")
+	@Column(name="url_imagem", length = 200, nullable = true)
 	private String urlImagem;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")	

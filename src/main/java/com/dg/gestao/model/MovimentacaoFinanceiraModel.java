@@ -28,7 +28,7 @@ public class MovimentacaoFinanceiraModel implements Serializable{
 		@GeneratedValue(strategy = GenerationType.AUTO)
 		private Long id; 
 				
-		@Column
+		@Column(length = 250, nullable = false)
 		private String descricao;
 
 		@ManyToOne(fetch = FetchType.LAZY)

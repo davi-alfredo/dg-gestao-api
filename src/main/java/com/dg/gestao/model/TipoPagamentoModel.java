@@ -23,7 +23,7 @@ public class TipoPagamentoModel implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id; 
 	
-	@Column
+	@Column(length = 100, nullable = false)
 	private String descricao;
 
 	public Integer getId() {

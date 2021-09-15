@@ -28,34 +28,34 @@ public class VeiculoModel implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID id;
 
-	@Column(name="placa")
+	@Column(name="placa", length = 10, nullable = false)
 	private String placa;
 	
-	@Column(name="fabricante")
+	@Column(name="fabricante", length = 50, nullable = false)
 	private String fabricante;
 	
-	@Column(name="modelo")
+	@Column(name="modelo", length = 100, nullable = false)
 	private String modelo;
 	
-	@Column(name="ano_fabricacao")
+	@Column(name="ano_fabricacao", nullable = false)
 	private int anoFabricacao;
 	
-	@Column(name="ano_modelo")
+	@Column(name="ano_modelo", nullable = false)
 	private int anoModelo;
 	
-	@Column(name="valor_compra")
+	@Column(name="valor_compra", nullable = false)
 	private Double valorCompra;
 	
-	@Column(name="valor_venda")
+	@Column(name="valor_venda", nullable = true)
 	private Double valorVenda;
 	
-	@Column(name="valor_fipe")
+	@Column(name="valor_fipe",nullable = false)
 	private Double valorFIPE;
 	
 	@Column
 	private boolean ativo;
 	
-	@Column(name="data_compra")
+	@Column(name="data_compra", nullable = false)
 	private LocalDate dataCompra;
 	
 	@Column(name="data_venda", nullable = true)

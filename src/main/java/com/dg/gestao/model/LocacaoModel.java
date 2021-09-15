@@ -36,16 +36,16 @@ public class LocacaoModel implements Serializable {
 	@Column(name="ativo")
 	private boolean ativo;
 	
-	@Column(name="data_inicio")
+	@Column(name="data_inicio", nullable = false)
 	private LocalDate dataInicio;
 	
 	@Column(name="data_termino", nullable = true)
 	private LocalDate dataTermino;
 	
-	@Column(name="observacao")
+	@Column(name="observacao", length = 200, nullable = false)
 	private String observacao;
 	
-	@Column(name="valor")
+	@Column(name="valor", nullable = false)
 	private Double valor;
 	
 	public UUID getId() {
