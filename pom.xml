@@ -14,7 +14,7 @@
 	<name>gestao</name>
 	<description>Projeto backend DG Locadora</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>11.0.12</java.version>
 		<repackage.classifier/>
 		<spring-native.version>0.10.3</spring-native.version>
 	</properties>
