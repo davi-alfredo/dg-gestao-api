@@ -21,10 +21,7 @@ import com.dg.gestao.model.Response;
 import com.dg.gestao.model.UsuarioModel;
 import com.dg.gestao.repository.UsuarioRepository;
 
-import io.swagger.annotations.Api;
-
 @RestController
-@Api("Api Usuários")
 @RequestMapping(value="/api")
 public class UsuarioController {
 	

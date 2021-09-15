@@ -12,11 +12,9 @@ import com.dg.gestao.model.Response;
 import com.dg.gestao.model.UsuarioModel;
 import com.dg.gestao.service.AutenticacaoService;
 
-import io.swagger.annotations.Api;
 import javassist.NotFoundException;
 
 @RestController
-@Api("Api Autenticacao")
 @RequestMapping(value="/api")
 public class AutenticacaoController {
 	

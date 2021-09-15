@@ -18,18 +18,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dg.gestao.model.ClienteModel;
 import com.dg.gestao.repository.ClienteRepository;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-
 @RestController
-@Api("Api Clientes")
+//@Api("Api Clientes")
 @RequestMapping(value="/api")
 public class ClienteController {
 	
 	@Autowired 
 	ClienteRepository repository;
 	
-	@ApiOperation("Obter Lista de Clientes")
 	@ResponseStatus(HttpStatus.OK)
 	@GetMapping(value="/clientes")
 	public ResponseEntity<?> getClientes() {
