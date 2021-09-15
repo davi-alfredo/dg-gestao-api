@@ -17,7 +17,7 @@ import javassist.NotFoundException;
 
 @RestController
 @Api("Api Autenticacao")
-@RequestMapping(value="/api/dg")
+@RequestMapping(value="/api")
 public class AutenticacaoController {
 	
 	@Autowired
