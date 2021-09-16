@@ -1,7 +1,6 @@
 package com.dg.gestao.config;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,7 +12,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	@Override
     protected void configure(HttpSecurity http) throws Exception {
         CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.setAllowedHeaders(this.ListOf("Authorization, Cache-Control, Content-Type"));
+        corsConfiguration.setAllowedHeaders(this.ListOf("Authorization,Cache-Control,Content-Type"));
         corsConfiguration.setAllowedOrigins(this.ListOf("*"));
         corsConfiguration.setAllowedMethods(this.ListOf("GET,POST,PUT,DELETE,PUT,OPTIONS,PATCH,DELETE"));
         corsConfiguration.setAllowCredentials(true);
@@ -32,7 +31,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 		List<String> listaItens = new ArrayList<String>();
 		
 		for (int i = 0; i < arrayItens.length; i++) {
-			listaItens.add(arrayItens[i]);
+			listaItens.add(arrayItens[i].trim());
 		}		
 		return listaItens;
 	}
