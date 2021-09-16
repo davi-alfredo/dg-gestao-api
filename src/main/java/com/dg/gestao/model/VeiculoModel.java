@@ -2,6 +2,7 @@ package com.dg.gestao.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -60,6 +61,9 @@ public class VeiculoModel implements Serializable{
 	
 	@Column(name="data_venda", nullable = true)
 	private LocalDate dataVenda;
+
+	@Column(name="data_atualizacao", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+	private LocalDateTime data_atualizacao;
 
 	@Column(name="url_imagem")
 	private String urlImagem;
@@ -177,6 +181,14 @@ public class VeiculoModel implements Serializable{
 
 	public void setMovimentacoesFinanceiras(List<MovimentacaoFinanceiraModel> movimentacoesFinanceiras) {
 		this.movimentacoesFinanceiras = movimentacoesFinanceiras;
+	}
+
+	public LocalDateTime getData_atualizacao() {
+		return data_atualizacao;
+	}
+
+	public void setData_atualizacao(LocalDateTime data_atualizacao) {
+		this.data_atualizacao = data_atualizacao;
 	}
 	
 }

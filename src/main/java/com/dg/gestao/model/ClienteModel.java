@@ -2,6 +2,7 @@ package com.dg.gestao.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -61,11 +62,11 @@ public class ClienteModel implements Serializable{
 	@Column(name="ativo")
 	private boolean ativo;
 	
-	@Column(name="data_cadastro", nullable = false)
-	private LocalDate data_cadastro;
+	@Column(name="data_cadastro", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+	private LocalDateTime data_cadastro;
 	
-	@Column(name="data_atualizacao", nullable = false)
-	private LocalDate data_atualizacao;
+	@Column(name="data_atualizacao", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+	private LocalDateTime data_atualizacao;
 
 	@Column(name="url_imagem", length = 200, nullable = true)
 	private String urlImagem;
@@ -177,19 +178,19 @@ public class ClienteModel implements Serializable{
 		this.ativo = ativo;
 	}
 
-	public LocalDate getData_cadastro() {
+	public LocalDateTime getData_cadastro() {
 		return data_cadastro;
 	}
 
-	public void setData_cadastro(LocalDate data_cadastro) {
+	public void setData_cadastro(LocalDateTime data_cadastro) {
 		this.data_cadastro = data_cadastro;
 	}
 
-	public LocalDate getData_atualizacao() {
+	public LocalDateTime getData_atualizacao() {
 		return data_atualizacao;
 	}
 
-	public void setData_atualizacao(LocalDate data_atualizacao) {
+	public void setData_atualizacao(LocalDateTime data_atualizacao) {
 		this.data_atualizacao = data_atualizacao;
 	}
 
