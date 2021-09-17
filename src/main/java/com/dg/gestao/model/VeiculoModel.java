@@ -193,5 +193,13 @@ public class VeiculoModel implements Serializable{
 	public void setData_atualizacao(LocalDateTime data_atualizacao) {
 		this.data_atualizacao = data_atualizacao;
 	}
+
+	public String getCor() {
+		return cor;
+	}
+
+	public void setCor(String cor) {
+		this.cor = cor;
+	}
 	
 }
