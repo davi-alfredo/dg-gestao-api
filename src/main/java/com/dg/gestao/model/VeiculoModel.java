@@ -38,6 +38,9 @@ public class VeiculoModel implements Serializable{
 	@Column(name="modelo", length = 100, nullable = false)
 	private String modelo;
 	
+	@Column(name="cor", length = 50, nullable = false)
+	private String cor;
+	
 	@Column(name="ano_fabricacao", nullable = false)
 	private int anoFabricacao;
 	

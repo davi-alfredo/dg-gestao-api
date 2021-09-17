@@ -19,20 +19,26 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dg.gestao.model.ClienteModel;
 import com.dg.gestao.repository.ClienteRepository;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @CrossOrigin
+@Tag(name="Clientes API", description = "API Clientes")
 @RequestMapping(value="/api")
 public class ClienteController {
 	
 	@Autowired 
 	ClienteRepository repository;
 	
+	@Operation(description = "Obter Clientes Ativos")
 	@ResponseStatus(HttpStatus.OK)
 	@GetMapping(value="/clientes")
 	public ResponseEntity<?> getClientes() {
 		return new ResponseEntity<>(repository.findAll(), HttpStatus.OK);
 	}
 
+	@Operation(description = "Obter Cliente através do Id")
 	@GetMapping(value="/clientes/{id}")
 	public ResponseEntity<?> getCliente(@PathVariable final UUID id) {
 		try {
@@ -42,6 +48,7 @@ public class ClienteController {
 		}
 	}
 	
+	@Operation(description = "Adicionar um novo cliente")
 	@PostMapping(value="/clientes")
 	public ResponseEntity<?> addCliente(@RequestBody final ClienteModel cliente) {
 		return new ResponseEntity<>(repository.save(cliente), HttpStatus.CREATED);
