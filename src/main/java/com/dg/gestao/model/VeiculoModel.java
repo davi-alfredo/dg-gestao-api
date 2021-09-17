@@ -15,6 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.UpdateTimestamp;
+
 @Entity
 @Table(name = "veiculo")
 public class VeiculoModel implements Serializable{
@@ -65,8 +67,14 @@ public class VeiculoModel implements Serializable{
 	@Column(name="data_venda", nullable = true)
 	private LocalDate dataVenda;
 
-	@Column(name="data_atualizacao", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-	private LocalDateTime data_atualizacao;
+    @Column(name = "updated_at")
+    @UpdateTimestamp
+	private LocalDateTime dataAtualizacao ;
+    
+    @Column(name = "created_at")
+    @UpdateTimestamp
+	private LocalDateTime dataCriacao ;
+
 
 	@Column(name="url_imagem")
 	private String urlImagem;
@@ -186,12 +194,12 @@ public class VeiculoModel implements Serializable{
 		this.movimentacoesFinanceiras = movimentacoesFinanceiras;
 	}
 
-	public LocalDateTime getData_atualizacao() {
-		return data_atualizacao;
+	public LocalDateTime getDataAtualizacao() {
+		return dataAtualizacao;
 	}
 
-	public void setData_atualizacao(LocalDateTime data_atualizacao) {
-		this.data_atualizacao = data_atualizacao;
+	public void setDataAtualizacao(LocalDateTime dataAtualizacao) {
+		this.dataAtualizacao = dataAtualizacao;
 	}
 
 	public String getCor() {
@@ -200,6 +208,14 @@ public class VeiculoModel implements Serializable{
 
 	public void setCor(String cor) {
 		this.cor = cor;
+	}
+
+	public LocalDateTime getDataCriacao() {
+		return dataCriacao;
+	}
+
+	public void setDataCriacao(LocalDateTime dataCriacao) {
+		this.dataCriacao = dataCriacao;
 	}
 	
 }

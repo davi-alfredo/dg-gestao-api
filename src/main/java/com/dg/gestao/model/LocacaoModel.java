@@ -2,6 +2,7 @@ package com.dg.gestao.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -11,6 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(name = "locacao")
@@ -47,6 +50,15 @@ public class LocacaoModel implements Serializable {
 	
 	@Column(name="valor", nullable = false)
 	private Double valor;
+	
+	@Column(name = "updated_at")
+    @UpdateTimestamp
+	private LocalDateTime dataAtualizacao ;
+    
+    @Column(name = "created_at")
+    @UpdateTimestamp
+	private LocalDateTime dataCadastro;
+    
 	
 	public UUID getId() {
 		return id;
@@ -110,6 +122,22 @@ public class LocacaoModel implements Serializable {
 
 	public void setValor(Double valor) {
 		this.valor = valor;
+	}
+
+	public LocalDateTime getDataCadastro() {
+		return dataCadastro;
+	}
+
+	public void setDataCadastro(LocalDateTime dataCadastro) {
+		this.dataCadastro = dataCadastro;
+	}
+
+	public LocalDateTime getDataAtualizacao() {
+		return dataAtualizacao;
+	}
+
+	public void setDataAtualizacao(LocalDateTime dataAtualizacao) {
+		this.dataAtualizacao = dataAtualizacao;
 	}
 
 	

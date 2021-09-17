@@ -1,6 +1,7 @@
 package com.dg.gestao.model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -9,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(name="usuario")
@@ -30,6 +33,14 @@ public class UsuarioModel implements Serializable{
 	@Column(nullable = false, length = 200)
 	private String password;
 
+	@Column(name = "updated_at")
+    @UpdateTimestamp
+	private LocalDateTime dataAtualizacao ;
+    
+    @Column(name = "created_at")
+    @UpdateTimestamp
+	private LocalDateTime dataCadastro;
+	
 	public UUID getId() {
 		return id;
 	}
@@ -52,6 +63,22 @@ public class UsuarioModel implements Serializable{
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public LocalDateTime getDataAtualizacao() {
+		return dataAtualizacao;
+	}
+
+	public void setDataAtualizacao(LocalDateTime dataAtualizacao) {
+		this.dataAtualizacao = dataAtualizacao;
+	}
+
+	public LocalDateTime getDataCadastro() {
+		return dataCadastro;
+	}
+
+	public void setDataCadastro(LocalDateTime dataCadastro) {
+		this.dataCadastro = dataCadastro;
 	}
 	
 

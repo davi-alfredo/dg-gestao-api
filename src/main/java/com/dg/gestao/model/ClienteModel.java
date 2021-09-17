@@ -15,6 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.UpdateTimestamp;
+
 @Entity
 @Table(name = "cliente")
 public class ClienteModel implements Serializable{
@@ -62,12 +64,13 @@ public class ClienteModel implements Serializable{
 	@Column(name="ativo")
 	private boolean ativo;
 	
-	@Column(name="data_cadastro", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-	private LocalDateTime data_cadastro;
-	
-	@Column(name="data_atualizacao", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-	private LocalDateTime data_atualizacao;
-
+	@Column(name = "updated_at")
+    @UpdateTimestamp
+	private LocalDateTime dataAtualizacao ;
+    
+    @Column(name = "created_at")
+    @UpdateTimestamp
+	private LocalDateTime dataCadastro;
 	@Column(name="url_imagem", length = 200, nullable = true)
 	private String urlImagem;
 	
@@ -178,20 +181,20 @@ public class ClienteModel implements Serializable{
 		this.ativo = ativo;
 	}
 
-	public LocalDateTime getData_cadastro() {
-		return data_cadastro;
+	public LocalDateTime getDataCadastro() {
+		return dataCadastro;
 	}
 
-	public void setData_cadastro(LocalDateTime data_cadastro) {
-		this.data_cadastro = data_cadastro;
+	public void setDataCadastro(LocalDateTime dataCadastro) {
+		this.dataCadastro = dataCadastro;
 	}
 
-	public LocalDateTime getData_atualizacao() {
-		return data_atualizacao;
+	public LocalDateTime getDataAtualizacao() {
+		return dataAtualizacao;
 	}
 
-	public void setData_atualizacao(LocalDateTime data_atualizacao) {
-		this.data_atualizacao = data_atualizacao;
+	public void setDataAtualizacao(LocalDateTime dataAtualizacao) {
+		this.dataAtualizacao = dataAtualizacao;
 	}
 
 	public List<MovimentacaoFinanceiraModel> getMovimentacoesFinanceiras() {

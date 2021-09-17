@@ -2,6 +2,7 @@ package com.dg.gestao.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
 @Table(name = "movimentacao_financeira")
@@ -53,6 +56,15 @@ public class MovimentacaoFinanceiraModel implements Serializable{
 		
 		@Column(name="data_pagamento", nullable = true)
 		private LocalDate dataPagamento;
+		
+		@Column(name = "updated_at")
+	    @UpdateTimestamp
+		private LocalDateTime dataAtualizacao ;
+	    
+	    @Column(name = "created_at")
+	    @UpdateTimestamp
+		private LocalDateTime dataCadastro;
+	    
 		
 		public boolean isPago() {
 			return pago;
@@ -135,6 +147,22 @@ public class MovimentacaoFinanceiraModel implements Serializable{
 
 		public void setDescricao(String descricao) {
 			this.descricao = descricao;
+		}
+
+		public LocalDateTime getDataCadastro() {
+			return dataCadastro;
+		}
+
+		public void setDataCadastro(LocalDateTime dataCadastro) {
+			this.dataCadastro = dataCadastro;
+		}
+
+		public LocalDateTime getDataAtualizacao() {
+			return dataAtualizacao;
+		}
+
+		public void setDataAtualizacao(LocalDateTime dataAtualizacao) {
+			this.dataAtualizacao = dataAtualizacao;
 		}
 	
 	
