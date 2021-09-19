@@ -13,6 +13,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name="usuario")
 public class UsuarioModel implements Serializable{
@@ -35,10 +37,12 @@ public class UsuarioModel implements Serializable{
 
 	@Column(name = "updated_at")
     @UpdateTimestamp
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
 	private LocalDateTime dataAtualizacao ;
     
     @Column(name = "created_at")
     @UpdateTimestamp
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
 	private LocalDateTime dataCadastro;
 	
 	public UUID getId() {

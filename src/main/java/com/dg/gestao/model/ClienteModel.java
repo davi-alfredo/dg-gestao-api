@@ -16,6 +16,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "cliente")
@@ -41,6 +44,8 @@ public class ClienteModel implements Serializable{
 	private String cpf;
 	
 	@Column(name="data_nascimento", nullable = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+	@DateTimeFormat(pattern="dd/MM/yyyy")
 	private LocalDate dataNascimento;
 	
 	@Column(name="endereco",length = 200, nullable = false)
@@ -66,10 +71,12 @@ public class ClienteModel implements Serializable{
 	
 	@Column(name = "updated_at")
     @UpdateTimestamp
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
 	private LocalDateTime dataAtualizacao ;
     
     @Column(name = "created_at")
     @UpdateTimestamp
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
 	private LocalDateTime dataCadastro;
 	@Column(name="url_imagem", length = 200, nullable = true)
 	private String urlImagem;
