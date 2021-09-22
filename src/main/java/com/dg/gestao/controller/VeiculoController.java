@@ -2,11 +2,10 @@ package com.dg.gestao.controller;
 
 import java.util.UUID;
 
-import javax.persistence.EntityNotFoundException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,7 +45,7 @@ public class VeiculoController {
 	public ResponseEntity<?> getVeiculo(@PathVariable UUID id) {
 		try {
 			return new ResponseEntity<>(repository.getById(id), HttpStatus.OK);
-		}catch(EntityNotFoundException e) {
+		}catch(JpaObjectRetrievalFailureException e) {
 			return new ResponseEntity<>("Nenhum registro encontrado para o ID informado.", HttpStatus.NOT_FOUND);
 		}
 	}
@@ -63,10 +62,15 @@ public class VeiculoController {
 	@ResponseStatus(code = HttpStatus.OK)
 	@PutMapping(value="/veiculos")
 	public ResponseEntity<?> updateVeiculo(@RequestBody final VeiculoModel veiculo) {
-		if(repository.existsById(veiculo.getId()))
-			return new ResponseEntity<>(repository.save(veiculo), HttpStatus.OK);
-		else
-			return new ResponseEntity<>("Nenhum registro encontrado para o ID informado.", HttpStatus.NOT_FOUND);	}
+		try {
+			if(repository.existsById(veiculo.getId()))
+				return new ResponseEntity<>(repository.save(veiculo), HttpStatus.OK);
+			else
+				return new ResponseEntity<>("Nenhum registro encontrado para o ID informado.", HttpStatus.NOT_FOUND);	
+		}catch(JpaObjectRetrievalFailureException e) {
+			return new ResponseEntity<>("Nenhum registro encontrado para o ID informado.", HttpStatus.NOT_FOUND);
+		}		
+	}
 	
 	@Operation(description = "Obter Veículo através do Id")
 	@ResponseStatus(code = HttpStatus.OK)
@@ -75,7 +79,7 @@ public class VeiculoController {
 		try {
 			repository.delete(repository.getById(id));
 			return new ResponseEntity<>("Removido com sucesso!", HttpStatus.OK);
-		}catch(EntityNotFoundException e) {
+		}catch(JpaObjectRetrievalFailureException e) {
 			return new ResponseEntity<>("Nenhum registro encontrado para o ID informado.", HttpStatus.NOT_FOUND);
 		}
 	}
