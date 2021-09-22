@@ -74,6 +74,9 @@ public class VeiculoModel implements Serializable{
 	@DateTimeFormat(pattern="dd/MM/yyyy")
 	private LocalDate dataVenda;
 
+	@Column(name="renavam", length = 50, nullable = true)
+	private String renavam;
+	
     @Column(name = "updated_at")
     @UpdateTimestamp
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
@@ -225,6 +228,14 @@ public class VeiculoModel implements Serializable{
 
 	public void setDataCriacao(LocalDateTime dataCriacao) {
 		this.dataCriacao = dataCriacao;
+	}
+
+	public String getRenavam() {
+		return renavam;
+	}
+
+	public void setRenavam(String renavam) {
+		this.renavam = renavam;
 	}
 	
 }

@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -52,6 +54,26 @@ public class ClienteController {
 	@PostMapping(value="/clientes")
 	public ResponseEntity<?> addCliente(@RequestBody final ClienteModel cliente) {
 		return new ResponseEntity<>(repository.save(cliente), HttpStatus.CREATED);
-	}	
+	}
+	
+	@Operation(description = "Atualizar um cliente")
+	@DeleteMapping(value="/clientes/{id}")
+	public ResponseEntity<?> removeCliente(@PathVariable final UUID id) {	
+		try {
+			repository.delete(repository.getById(id));
+			return new ResponseEntity<>("Removido com sucesso!", HttpStatus.OK);
+		}catch(EntityNotFoundException e) {
+			return new ResponseEntity<>("Nenhum registro encontrado para o ID informado.", HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	@Operation(description = "Atualizar um cliente")
+	@PutMapping(value="/clientes")
+	public ResponseEntity<?> updateCliente(@RequestBody final ClienteModel cliente) {
+		if(repository.existsById(cliente.getId()))
+			return new ResponseEntity<>(repository.save(cliente), HttpStatus.OK);
+		else
+			return new ResponseEntity<>("Nenhum registro encontrado para o ID informado.", HttpStatus.NOT_FOUND);
+	}
 
 }

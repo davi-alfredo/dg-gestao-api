@@ -78,7 +78,8 @@ public class ClienteModel implements Serializable{
     @UpdateTimestamp
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
 	private LocalDateTime dataCadastro;
-	@Column(name="url_imagem", length = 200, nullable = true)
+
+    @Column(name="url_imagem", length = 200, nullable = true)
 	private String urlImagem;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")	
@@ -211,8 +212,5 @@ public class ClienteModel implements Serializable{
 	public void setMovimentacoesFinanceiras(List<MovimentacaoFinanceiraModel> movimentacoesFinanceiras) {
 		this.movimentacoesFinanceiras = movimentacoesFinanceiras;
 	}
-	
-	
-	
 
 }

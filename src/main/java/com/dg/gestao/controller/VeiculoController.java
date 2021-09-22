@@ -63,8 +63,10 @@ public class VeiculoController {
 	@ResponseStatus(code = HttpStatus.OK)
 	@PutMapping(value="/veiculos")
 	public ResponseEntity<?> updateVeiculo(@RequestBody final VeiculoModel veiculo) {
-		return new ResponseEntity<>(HttpStatus.OK);
-	}
+		if(repository.existsById(veiculo.getId()))
+			return new ResponseEntity<>(repository.save(veiculo), HttpStatus.OK);
+		else
+			return new ResponseEntity<>("Nenhum registro encontrado para o ID informado.", HttpStatus.NOT_FOUND);	}
 	
 	@Operation(description = "Obter Veículo através do Id")
 	@ResponseStatus(code = HttpStatus.OK)
