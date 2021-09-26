@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dg.gestao.model.MovimentacaoFinanceiraModel;
 import com.dg.gestao.repository.MovimentacaoFinanceiraRepository;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
@@ -27,11 +28,13 @@ public class MovimentacaoFinanceiraController {
 	@Autowired 
 	MovimentacaoFinanceiraRepository repository;
 	
+	@Operation(description = "Obter movimentações financeiras")
 	@GetMapping(value="/movimentacoes")
 	public ResponseEntity<?> getMovimentacoes() {
 		return new ResponseEntity<>(repository.findAll(), HttpStatus.OK);
 	}
 
+	@Operation(description = "Obter uma movimentação financeira através do Id")
 	@GetMapping(value="/movimentacoes/{id}")
 	public ResponseEntity<?> getMovimentacao(@PathVariable Long id) {
 		try {
@@ -41,8 +44,9 @@ public class MovimentacaoFinanceiraController {
 		}
 	}
 	
+	@Operation(description = "Adicionar uma nova Movimentação Financeira")
 	@PostMapping(value="/movimentacoes")
-	public ResponseEntity<?> addMovimentacao(@RequestBody MovimentacaoFinanceiraModel vovimentacaoFinanceiraModel) {
-		return new ResponseEntity<>(new MovimentacaoFinanceiraModel(), HttpStatus.OK);
+	public ResponseEntity<?> addMovimentacao(@RequestBody MovimentacaoFinanceiraModel movimentacaoFinanceiraModel) {
+		return new ResponseEntity<>(repository.save(movimentacaoFinanceiraModel), HttpStatus.CREATED);
 	}
 }
