@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -33,10 +34,10 @@ public class LocacaoModel implements Serializable {
 	private UUID id;
 
 
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
 	private VeiculoModel veiculo;
 	
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
 	private ClienteModel cliente;
 	
 	@Column(name="ativo")

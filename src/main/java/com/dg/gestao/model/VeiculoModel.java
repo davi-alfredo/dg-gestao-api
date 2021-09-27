@@ -9,6 +9,7 @@ import java.util.UUID;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -91,7 +92,7 @@ public class VeiculoModel implements Serializable{
 	@Column(name="url_imagem")
 	private String urlImagem;
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "veiculo")	
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "veiculo")	
 	private List<MovimentacaoFinanceiraModel> movimentacoesFinanceiras;
 	
 	public String getUrlImagem() {
