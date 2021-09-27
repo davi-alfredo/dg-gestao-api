@@ -19,8 +19,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "veiculo")
@@ -94,7 +94,8 @@ public class VeiculoModel implements Serializable{
 	private String urlImagem;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "veiculo")	
-	@JsonManagedReference
+	//@JsonManagedReference
+	@JsonBackReference
 	private List<MovimentacaoFinanceiraModel> movimentacoesFinanceiras;
 	
 	public String getUrlImagem() {
