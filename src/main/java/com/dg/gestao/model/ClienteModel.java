@@ -89,6 +89,10 @@ public class ClienteModel implements Serializable{
 	@JsonBackReference
 	private List<MovimentacaoFinanceiraModel> movimentacoesFinanceiras;
 	
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "cliente")	
+	@JsonBackReference
+	private List<LocacaoModel> locacoes;
+	
 	public String getUrlImagem() {
 		return urlImagem;
 	}
@@ -215,6 +219,14 @@ public class ClienteModel implements Serializable{
 	
 	public void setMovimentacoesFinanceiras(List<MovimentacaoFinanceiraModel> movimentacoesFinanceiras) {
 		this.movimentacoesFinanceiras = movimentacoesFinanceiras;
+	}
+
+	public List<LocacaoModel> getLocacoes() {
+		return locacoes;
+	}
+
+	public void setLocacoes(List<LocacaoModel> locacoes) {
+		this.locacoes = locacoes;
 	}
 
 }
