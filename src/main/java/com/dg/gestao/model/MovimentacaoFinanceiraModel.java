@@ -18,6 +18,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
@@ -39,10 +40,12 @@ public class MovimentacaoFinanceiraModel implements Serializable{
 
 		@ManyToOne(fetch = FetchType.LAZY)
 		@JoinColumn(name="cliente_id")
+		@JsonBackReference
 		private ClienteModel cliente;
 		
 		@ManyToOne(fetch = FetchType.LAZY)
 		@JoinColumn(name="veiculo_id")
+		@JsonBackReference
 		private VeiculoModel veiculo;
 		
 		@OneToOne

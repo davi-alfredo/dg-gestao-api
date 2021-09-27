@@ -20,6 +20,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "cliente")
@@ -84,6 +85,7 @@ public class ClienteModel implements Serializable{
 	private String urlImagem;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "cliente")	
+	@JsonManagedReference
 	private List<MovimentacaoFinanceiraModel> movimentacoesFinanceiras;
 	
 	public String getUrlImagem() {
