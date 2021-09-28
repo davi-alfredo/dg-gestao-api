@@ -21,7 +21,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties("inspection")
 @Entity
 @Table(name = "cliente")
 public class ClienteModel implements Serializable{
@@ -85,11 +87,11 @@ public class ClienteModel implements Serializable{
 	private String urlImagem;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "cliente")	
-	@JsonBackReference(value = "movimentacoes-cliente")
+	@JsonBackReference//(value = "cliente-movimentacoes")
 	private List<MovimentacaoFinanceiraModel> movimentacoesFinanceiras;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "cliente")	
-	@JsonBackReference(value = "locacoes-cliente")
+	@JsonBackReference//(value = "cliente-locacoes")
 	private List<LocacaoModel> locacoes;
 	
 	public String getUrlImagem() {

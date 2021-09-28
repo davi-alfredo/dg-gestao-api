@@ -37,7 +37,7 @@ public class VeiculoController {
 	@ResponseStatus(code = HttpStatus.OK)
 	@GetMapping(value="/veiculos")
 	public ResponseEntity<?> getVeiculos() {		
-		return new ResponseEntity<>(repository.findAll(Sort.by(Sort.Direction.DESC, "fabricante")), HttpStatus.OK);
+		return new ResponseEntity<>(repository.findAll(Sort.by(Sort.Direction.ASC, "fabricante")), HttpStatus.OK);
 	}
 
 	@Operation(description = "Obter Veículo através do Id")
