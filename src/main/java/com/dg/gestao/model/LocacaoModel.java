@@ -38,13 +38,12 @@ public class LocacaoModel implements Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="veiculo_id")
-	@JsonManagedReference
+	@JsonManagedReference(value = "veiculo-locacao")
 	private VeiculoModel veiculo;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="cliente_id")
-	//@JsonBackReference
-	@JsonManagedReference
+	@JsonManagedReference(value = "cliente-locacao")
 	private ClienteModel cliente;
 	
 	@Column(name="ativo")

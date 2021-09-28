@@ -40,14 +40,12 @@ public class MovimentacaoFinanceiraModel implements Serializable{
 
 		@ManyToOne(fetch = FetchType.LAZY)
 		@JoinColumn(name="cliente_id")
-		//@JsonBackReference
-		@JsonManagedReference
+		@JsonManagedReference(value = "cliente-movimentacao")
 		private ClienteModel cliente;
 		
 		@ManyToOne(fetch = FetchType.LAZY)
 		@JoinColumn(name="veiculo_id")
-		//@JsonBackReference
-		@JsonManagedReference
+		@JsonManagedReference(value = "veiculo-movimentacao")
 		private VeiculoModel veiculo;
 		
 		@OneToOne

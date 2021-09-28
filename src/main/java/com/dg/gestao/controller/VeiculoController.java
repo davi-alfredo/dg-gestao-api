@@ -3,6 +3,7 @@ package com.dg.gestao.controller;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
@@ -36,7 +37,7 @@ public class VeiculoController {
 	@ResponseStatus(code = HttpStatus.OK)
 	@GetMapping(value="/veiculos")
 	public ResponseEntity<?> getVeiculos() {		
-		return new ResponseEntity<>(repository.findAll(), HttpStatus.OK);
+		return new ResponseEntity<>(repository.findAll(Sort.by(Sort.Direction.DESC, "fabricante")), HttpStatus.OK);
 	}
 
 	@Operation(description = "Obter Veículo através do Id")

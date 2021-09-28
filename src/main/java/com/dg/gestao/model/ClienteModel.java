@@ -85,12 +85,11 @@ public class ClienteModel implements Serializable{
 	private String urlImagem;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "cliente")	
-	//@JsonManagedReference
-	@JsonBackReference
+	@JsonBackReference(value = "movimentacoes-cliente")
 	private List<MovimentacaoFinanceiraModel> movimentacoesFinanceiras;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "cliente")	
-	@JsonBackReference
+	@JsonBackReference(value = "locacoes-cliente")
 	private List<LocacaoModel> locacoes;
 	
 	public String getUrlImagem() {

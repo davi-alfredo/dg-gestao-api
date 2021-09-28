@@ -95,11 +95,11 @@ public class VeiculoModel implements Serializable{
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "veiculo")	
 	//@JsonManagedReference
-	@JsonBackReference
+	@JsonBackReference(value = "movimentacoes-veiculo")
 	private List<MovimentacaoFinanceiraModel> movimentacoesFinanceiras;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "veiculo")	
-	@JsonBackReference
+	@JsonBackReference(value = "locacoes-veiculo")
 	private List<LocacaoModel> locacoes;
 	
 	public String getUrlImagem() {
