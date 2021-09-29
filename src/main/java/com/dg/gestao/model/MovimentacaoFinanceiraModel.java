@@ -19,12 +19,13 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-@JsonIgnoreProperties("inspection")
+
 @Entity
 @Table(name = "movimentacao_financeira")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, 
+//property  = "movimentacao_id", scope     = Long.class)
 public class MovimentacaoFinanceiraModel implements Serializable{
 
 		/**

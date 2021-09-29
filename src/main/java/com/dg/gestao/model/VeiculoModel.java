@@ -19,13 +19,14 @@ import javax.persistence.Table;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@JsonIgnoreProperties("inspection")
 @Entity
 @Table(name = "veiculo")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, 
+//property  = "veiculo_id", 
+//scope     = UUID.class)
 public class VeiculoModel implements Serializable{
 	
 	/**
@@ -96,11 +97,13 @@ public class VeiculoModel implements Serializable{
 	private String urlImagem;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "veiculo")
-	@JsonBackReference//(value = "veiculo-movimentacoes")
+	//@JsonBackReference//(value = "veiculo-movimentacoes")
+	@JsonIgnore
 	private List<MovimentacaoFinanceiraModel> movimentacoesFinanceiras;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "veiculo")	
-	@JsonBackReference//(value = "cliente-movimentacoes")
+	//@JsonBackReference//(value = "cliente-locacoes")
+	@JsonIgnore
 	private List<LocacaoModel> locacoes;
 	
 	public String getUrlImagem() {
