@@ -10,7 +10,9 @@ import com.dg.gestao.model.MovimentacaoFinanceiraModel;
 public interface MovimentacaoFinanceiraRepository extends JpaRepository<MovimentacaoFinanceiraModel, Long> {
 	
 	
-	@Query(value = "SELECT m.tipo_movimentacao_id, AVG(m.valor), EXTRACT(MONTH FROM m.data_pagamento) FROM movimentacao_financeira m WHERE EXTRACT(YEAR FROM m.data_pagamento) =?1  GROUP BY m.tipo_movimentacao_id, m.data_pagamento", nativeQuery = true)
+	@Query(value = "SELECT m.tipo_movimentacao_id, AVG(m.valor), EXTRACT(MONTH FROM m.data_pagamento) "
+			   + "  FROM movimentacao_financeira m WHERE EXTRACT(YEAR FROM m.data_pagamento) =?1  "
+			   + "  GROUP BY m.tipo_movimentacao_id, m.data_pagamento", nativeQuery = true)
 	List<?>getConsolidado(int ano);
 
 }
