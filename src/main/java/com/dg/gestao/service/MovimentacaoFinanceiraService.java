@@ -18,9 +18,7 @@ public class MovimentacaoFinanceiraService {
 	
 	
 	public List<MovimentacaoMensalDTO> obterMovimentacaoAnual(int ano) {
-		
 		List<?> consolidado = repository.getConsolidado(ano);
-		
 		return  extrairConsolidado(consolidado);
 	}
 	

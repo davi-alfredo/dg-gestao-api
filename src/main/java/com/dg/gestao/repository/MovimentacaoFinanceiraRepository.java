@@ -11,8 +11,11 @@ public interface MovimentacaoFinanceiraRepository extends JpaRepository<Moviment
 	
 	
 	@Query(value = "SELECT m.tipo_movimentacao_id, AVG(m.valor), EXTRACT(MONTH FROM m.data_pagamento) "
-			   + "  FROM movimentacao_financeira m WHERE EXTRACT(YEAR FROM m.data_pagamento) =?1  "
-			   + "  GROUP BY m.tipo_movimentacao_id, m.data_pagamento", nativeQuery = true)
+			   + "  FROM movimentacao_financeira m "
+			   + " WHERE EXTRACT(YEAR FROM m.data_pagamento) =?1  AND situacao_pagamento_id = 1"
+			   + "  GROUP BY m.tipo_movimentacao_id, m.data_pagamento ", nativeQuery = true)
 	List<?>getConsolidado(int ano);
 
+	@Query(value = "SELECT * FROM movimentacao_financeira WHERE tipo_movimentacao_id=?1", nativeQuery = true )
+	List<MovimentacaoFinanceiraModel> getByTipo(int tipo);
 }

@@ -56,9 +56,9 @@ public class MovimentacaoFinanceiraModel implements Serializable{
 		@OneToOne
 		private TipoPagamentoModel tipoPagamento;	
 		
-		@Column(name="pago")
-		private boolean pago;
-		
+		@OneToOne
+		private SituacaoPagamentoModel situacaoPagamento;	
+						
 		@Column(name="data_vencimento")
 	    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
 		@DateTimeFormat(pattern="dd/MM/yyyy")
@@ -79,16 +79,14 @@ public class MovimentacaoFinanceiraModel implements Serializable{
 	    @UpdateTimestamp
 	    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy HH:mm:ss")
 		private LocalDateTime dataCadastro;
+
+	    @Column(name="valor")
+		private Double valor;
 	    
-		
-		public boolean isPago() {
-			return pago;
-		}
-
-		public void setPago(boolean pago) {
-			this.pago = pago;
-		}
-
+	    @Column(name="valor_pago")
+		private Double valorPago;
+	    
+	    
 		public LocalDate getDataVencimento() {
 			return dataVencimento;
 		}
@@ -111,10 +109,7 @@ public class MovimentacaoFinanceiraModel implements Serializable{
 
 		public void setValor(Double valor) {
 			this.valor = valor;
-		}
-
-		@Column(name="valor")
-		private Double valor;
+		}		
 		
 		public ClienteModel getCliente() {
 			return cliente;
@@ -179,8 +174,21 @@ public class MovimentacaoFinanceiraModel implements Serializable{
 		public void setDataAtualizacao(LocalDateTime dataAtualizacao) {
 			this.dataAtualizacao = dataAtualizacao;
 		}
-	
-	
-	
 
+		public SituacaoPagamentoModel getSituacaoPagamento() {
+			return situacaoPagamento;
+		}
+
+		public void setSituacaoPagamento(SituacaoPagamentoModel situacaoPagamento) {
+			this.situacaoPagamento = situacaoPagamento;
+		}
+
+		public Double getValorPago() {
+			return valorPago;
+		}
+
+		public void setValorPago(Double valorPago) {
+			this.valorPago = valorPago;
+		}
+	
 }

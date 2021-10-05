@@ -64,5 +64,16 @@ public class MovimentacaoFinanceiraController {
 		List<MovimentacaoMensalDTO> retorno = service.obterMovimentacaoAnual(ano);
 		return new ResponseEntity<>(retorno, HttpStatus.OK);
 	}
+	
+	@Operation(description = "Obter movimentações Por Tipo")
+	@GetMapping(value="/movimentacoes/tipo/{tipo}")
+	public ResponseEntity<?> getPorSituacao(@PathVariable int tipo) {
+		List<MovimentacaoFinanceiraModel> retorno = null;
+		if(tipo == 0)
+			retorno = repository.findAll();
+		else
+			retorno = repository.getByTipo(tipo);
+		return new ResponseEntity<>(retorno, HttpStatus.OK);
+	}
 
 }
