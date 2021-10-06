@@ -2,7 +2,7 @@ package com.dg.gestao.dto;
 
 import java.io.Serializable;
 
-public class MovimentacaoMensalDTO implements Serializable{
+public class MovimentacaoDTO implements Serializable{
 	
 	/**
 	 * 

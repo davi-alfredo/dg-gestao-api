@@ -73,7 +73,7 @@ public class VeiculoController {
 		}		
 	}
 	
-	@Operation(description = "Obter Veículo através do Id")
+	@Operation(description = "Remover Veículo através do Id")
 	@ResponseStatus(code = HttpStatus.OK)
 	@DeleteMapping(value="/veiculos/{id}")
 	public ResponseEntity<?> removeVeiculo(@PathVariable UUID id) {

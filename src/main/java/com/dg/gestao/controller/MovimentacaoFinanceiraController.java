@@ -1,10 +1,12 @@
 package com.dg.gestao.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
@@ -16,9 +18,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dg.gestao.dto.MovimentacaoMensalDTO;
+import com.dg.gestao.dto.MovimentacaoDTO;
 import com.dg.gestao.model.MovimentacaoFinanceiraModel;
 import com.dg.gestao.repository.MovimentacaoFinanceiraRepository;
 import com.dg.gestao.service.MovimentacaoFinanceiraService;
@@ -41,7 +44,7 @@ public class MovimentacaoFinanceiraController {
 	@Operation(description = "Obter movimentações financeiras")
 	@GetMapping(value="/movimentacoes")
 	public ResponseEntity<?> getMovimentacoes() {
-		return new ResponseEntity<>(repository.findAll(), HttpStatus.OK);
+		return new ResponseEntity<>(repository.findAll(Sort.by(Sort.Direction.DESC, "created_at")), HttpStatus.OK);
 	}
 
 	@Operation(description = "Obter uma movimentação financeira através do Id")
@@ -64,7 +67,14 @@ public class MovimentacaoFinanceiraController {
 	@Operation(description = "Obter movimentações financeiras")
 	@GetMapping(value="/movimentacoes/consolidado/{ano}")
 	public ResponseEntity<?> getConsolidadoAnual(@PathVariable int ano) {
-		List<MovimentacaoMensalDTO> retorno = service.obterMovimentacaoAnual(ano);
+		List<MovimentacaoDTO> retorno = service.obterMovimentacaoAnual(ano);
+		return new ResponseEntity<>(retorno, HttpStatus.OK);
+	}
+	
+	@Operation(description = "Obter movimentações financeiras")
+	@GetMapping(value="/movimentacoes/totais/{ano}")
+	public ResponseEntity<?> getTotaisAnual(@PathVariable int ano) {
+		MovimentacaoDTO retorno = service.obterMovimentacaoTotaisAnual(ano);
 		return new ResponseEntity<>(retorno, HttpStatus.OK);
 	}
 	
@@ -103,6 +113,27 @@ public class MovimentacaoFinanceiraController {
 			return new ResponseEntity<>("Nenhum registro encontrado para o ID informado.", HttpStatus.NOT_FOUND);
 		}
 	}
-
-
+	
+	
+	@Operation(description = "Obter Movimentações do Veículo através do Id")
+	@ResponseStatus(code = HttpStatus.OK)
+	@GetMapping(value="/movimentacoes/veiculos/{id}")
+	public ResponseEntity<?> getMovimentacoesVeiculo(@PathVariable UUID id) {
+		try {
+			return new ResponseEntity<>(repository.getByVeiculo(id), HttpStatus.OK);
+		}catch(JpaObjectRetrievalFailureException e) {
+			return new ResponseEntity<>("Nenhum registro encontrado para o ID informado.", HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	@Operation(description = "Obter Movimentações do Cliente através do Id")
+	@ResponseStatus(code = HttpStatus.OK)
+	@GetMapping(value="/movimentacoes/clientes/{id}")
+	public ResponseEntity<?> getMovimentacoesCliente(@PathVariable UUID id) {
+		try {
+			return new ResponseEntity<>(repository.getByCliente(id), HttpStatus.OK);
+		}catch(JpaObjectRetrievalFailureException e) {
+			return new ResponseEntity<>("Nenhum registro encontrado para o ID informado.", HttpStatus.NOT_FOUND);
+		}
+	}	
 }

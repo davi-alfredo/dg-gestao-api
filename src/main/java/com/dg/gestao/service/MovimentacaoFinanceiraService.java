@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.dg.gestao.dto.MovimentacaoMensalDTO;
+import com.dg.gestao.dto.MovimentacaoDTO;
 import com.dg.gestao.repository.MovimentacaoFinanceiraRepository;
 
 
@@ -17,16 +17,39 @@ public class MovimentacaoFinanceiraService {
 	MovimentacaoFinanceiraRepository repository;	
 	
 	
-	public List<MovimentacaoMensalDTO> obterMovimentacaoAnual(int ano) {
+	public List<MovimentacaoDTO> obterMovimentacaoAnual(int ano) {
 		List<?> consolidado = repository.getConsolidado(ano);
 		return  extrairConsolidado(consolidado);
 	}
 	
-	
-	private List<MovimentacaoMensalDTO> extrairConsolidado(List<?> consolidado) {
+	public MovimentacaoDTO obterMovimentacaoTotaisAnual(int ano) {
+		List<?> consolidado = repository.getTotaisAnual(ano);
 		
-		List<MovimentacaoMensalDTO> movimentacoes = new ArrayList<MovimentacaoMensalDTO>();
-		MovimentacaoMensalDTO movimentacao = null;
+		MovimentacaoDTO movimentacao = new MovimentacaoDTO();
+		
+		
+		for (int i = 0; i < consolidado.size(); i++) {	
+			Object[] objetos = (Object[]) consolidado.get(i);
+			
+			if((Integer)objetos[0] == 1)
+				movimentacao.setEntradas((Double)objetos[1]);
+			else
+				movimentacao.setSaidas((Double)objetos[1]);
+		}
+		
+		
+		movimentacao.setTotal(movimentacao.getEntradas() - movimentacao.getSaidas());
+		
+
+		
+		return movimentacao;
+	}
+	
+	
+	private List<MovimentacaoDTO> extrairConsolidado(List<?> consolidado) {
+		
+		List<MovimentacaoDTO> movimentacoes = new ArrayList<MovimentacaoDTO>();
+		MovimentacaoDTO movimentacao = null;
 		
 		for (int j = 1; j < 12; j++) {			
 			
@@ -37,7 +60,7 @@ public class MovimentacaoFinanceiraService {
 				
 				if((Double)objetos[2] == j) {
 					if(movimentacao == null) {
-						movimentacao = new MovimentacaoMensalDTO();
+						movimentacao = new MovimentacaoDTO();
 						movimentacao.setMes(getMes((Double)objetos[2]));
 					}
 					
@@ -104,5 +127,8 @@ public class MovimentacaoFinanceiraService {
 		
 		return mesRetorno;
 	}
+
+
+
 
 }
