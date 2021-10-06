@@ -23,8 +23,11 @@ public interface MovimentacaoFinanceiraRepository extends JpaRepository<Moviment
 			   + "  GROUP BY m.tipo_movimentacao_id", nativeQuery = true)
 	List<?>getTotaisAnual(int ano);
 
-	@Query(value = "SELECT * FROM movimentacao_financeira WHERE tipo_movimentacao_id=?1", nativeQuery = true )
-	List<MovimentacaoFinanceiraModel> getByTipo(int tipo);
+	@Query(value = "SELECT * FROM movimentacao_financeira WHERE situacao_pagamento_id = 1", nativeQuery = true )
+	List<MovimentacaoFinanceiraModel> getPagos();
+
+	@Query(value = "SELECT * FROM movimentacao_financeira WHERE situacao_pagamento_id > 1", nativeQuery = true )
+	List<MovimentacaoFinanceiraModel> getPendencias();
 	
 	@Query(value = "SELECT * FROM movimentacao_financeira WHERE veiculo_id=?1", nativeQuery = true )
 	List<MovimentacaoFinanceiraModel> getByVeiculo(UUID idVeiculo);

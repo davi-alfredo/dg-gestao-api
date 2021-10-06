@@ -82,10 +82,13 @@ public class MovimentacaoFinanceiraController {
 	@GetMapping(value="/movimentacoes/tipo/{tipo}")
 	public ResponseEntity<?> getPorSituacao(@PathVariable int tipo) {
 		List<MovimentacaoFinanceiraModel> retorno = null;
-		if(tipo == 0)
+		if (tipo == 1)
+			retorno = repository.getPagos();
+		else if (tipo == 2 || tipo == 3)
+			retorno = repository.getPendencias();
+		else 
 			retorno = repository.findAll();
-		else
-			retorno = repository.getByTipo(tipo);
+		
 		return new ResponseEntity<>(retorno, HttpStatus.OK);
 	}
 	

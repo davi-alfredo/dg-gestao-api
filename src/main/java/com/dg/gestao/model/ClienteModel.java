@@ -42,6 +42,9 @@ public class ClienteModel implements Serializable{
 	@Column(name="nome", length = 150, nullable = false)
 	private String nome;
 	
+	@Column(name="apelido", length = 20, nullable = true)
+	private String apelido;
+	
 	@Column(name="rg", length = 20, nullable = false)
 	private String rg;
 	
@@ -230,6 +233,14 @@ public class ClienteModel implements Serializable{
 
 	public void setLocacoes(List<LocacaoModel> locacoes) {
 		this.locacoes = locacoes;
+	}
+
+	public String getApelido() {
+		return apelido;
+	}
+
+	public void setApelido(String apelido) {
+		this.apelido = apelido;
 	}
 
 }
