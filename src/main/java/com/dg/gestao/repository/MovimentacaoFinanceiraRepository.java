@@ -23,7 +23,7 @@ public interface MovimentacaoFinanceiraRepository extends JpaRepository<Moviment
 			   + "  GROUP BY m.tipo_movimentacao_id", nativeQuery = true)
 	List<?>getTotaisAnual(int ano);
 
-	@Query(value = "SELECT * FROM movimentacao_financeira WHERE situacao_pagamento_id=?1 order by id desc", nativeQuery = true )
+	@Query(value = "SELECT * FROM movimentacao_financeira WHERE situacao_pagamento_id=?1 order by movimentacao_id desc", nativeQuery = true )
 	List<MovimentacaoFinanceiraModel> getBySituacaoPagamento(int situacao);
 	
 	@Query(value = "SELECT * FROM movimentacao_financeira WHERE situacao_pagamento_id = 1", nativeQuery = true )
@@ -32,9 +32,9 @@ public interface MovimentacaoFinanceiraRepository extends JpaRepository<Moviment
 	@Query(value = "SELECT * FROM movimentacao_financeira WHERE situacao_pagamento_id > 1", nativeQuery = true )
 	List<MovimentacaoFinanceiraModel> getPendencias();
 	
-	@Query(value = "SELECT * FROM movimentacao_financeira WHERE veiculo_id=?1 order by id desc" , nativeQuery = true )
+	@Query(value = "SELECT * FROM movimentacao_financeira WHERE veiculo_id=?1 order by movimentacao_id desc" , nativeQuery = true )
 	List<MovimentacaoFinanceiraModel> getByVeiculo(UUID idVeiculo);
 	
-	@Query(value = "SELECT * FROM movimentacao_financeira WHERE cliente_id=?1 order by id desc", nativeQuery = true )
+	@Query(value = "SELECT * FROM movimentacao_financeira WHERE cliente_id=?1 order by movimentacao_id desc", nativeQuery = true )
 	List<MovimentacaoFinanceiraModel> getByCliente(UUID idCliente);
 }

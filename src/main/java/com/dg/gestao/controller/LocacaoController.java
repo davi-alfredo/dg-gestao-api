@@ -36,7 +36,7 @@ public class LocacaoController {
 	
 	@GetMapping(value="/locacoes")
 	public ResponseEntity<?> getLocacoes() {
-		return  new ResponseEntity<>(repository.findAll(Sort.by(Sort.Direction.ASC, "data_inicio")), HttpStatus.OK);
+		return  new ResponseEntity<>(repository.findAll(Sort.by(Sort.Direction.ASC, "dataInicio")), HttpStatus.OK);
 	}
 
 	@GetMapping(value="/locacoes/{id}")
