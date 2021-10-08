@@ -5,6 +5,7 @@ import java.util.UUID;
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
@@ -35,7 +36,7 @@ public class LocacaoController {
 	
 	@GetMapping(value="/locacoes")
 	public ResponseEntity<?> getLocacoes() {
-		return  new ResponseEntity<>(repository.findAll(), HttpStatus.OK);
+		return  new ResponseEntity<>(repository.findAll(Sort.by(Sort.Direction.ASC, "data_inicio")), HttpStatus.OK);
 	}
 
 	@GetMapping(value="/locacoes/{id}")
