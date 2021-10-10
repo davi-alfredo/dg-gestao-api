@@ -84,4 +84,11 @@ public class VeiculoController {
 			return new ResponseEntity<>("Nenhum registro encontrado para o ID informado.", HttpStatus.NOT_FOUND);
 		}
 	}
+	
+	@Operation(description = "Obter Veículo através da situação")
+	@ResponseStatus(code = HttpStatus.OK)
+	@GetMapping(value="/veiculos/situacao/{isAlugado}")
+	public ResponseEntity<?> getVeiculosBySituacao(@PathVariable boolean isAlugado) {	
+		return new ResponseEntity<>(repository.getBySituacao(isAlugado), HttpStatus.OK);
+	}
 }

@@ -71,7 +71,7 @@ public class ClienteModel implements Serializable{
 	@Column(name="telefone", length = 20, nullable = false)
 	private String telefone;
 	
-	@Column(name="email", length = 70, nullable = false)
+	@Column(name="email", length = 70, nullable = true)
 	private String email;
 	
 	@Column(name="ativo")

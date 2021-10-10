@@ -49,6 +49,12 @@ public class ClienteController {
 		}
 	}
 	
+	@Operation(description = "Obter Cliente através da situação")
+	@GetMapping(value="/clientes/situacao/{isAtivo}")
+	public ResponseEntity<?> getClientesBySituacao(@PathVariable final boolean isAtivo) {
+		return new ResponseEntity<>(repository.getBySituacao(isAtivo), HttpStatus.OK);		
+	}
+	
 	@Operation(description = "Adicionar um novo cliente")
 	@PostMapping(value="/clientes")
 	public ResponseEntity<?> addCliente(@RequestBody final ClienteModel cliente) {

@@ -14,7 +14,7 @@ public interface MovimentacaoFinanceiraRepository extends JpaRepository<Moviment
 	@Query(value = "SELECT m.tipo_movimentacao_id, SUM(m.valor_pago), EXTRACT(MONTH FROM m.data_pagamento) "
 			   + "  FROM movimentacao_financeira m "
 			   + " WHERE EXTRACT(YEAR FROM m.data_pagamento) =?1  AND situacao_pagamento_id < 3"
-			   + "  GROUP BY m.tipo_movimentacao_id, m.data_pagamento ", nativeQuery = true)
+			   + "  GROUP BY m.tipo_movimentacao_id, EXTRACT(MONTH FROM m.data_pagamento) ", nativeQuery = true)
 	List<?>getConsolidado(int ano);
 	
 	@Query(value = "SELECT m.tipo_movimentacao_id, SUM(m.valor_pago) "
