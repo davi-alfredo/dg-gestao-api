@@ -87,8 +87,8 @@ public class VeiculoController {
 	
 	@Operation(description = "Obter Veículo através da situação")
 	@ResponseStatus(code = HttpStatus.OK)
-	@GetMapping(value="/veiculos/situacao/{isAlugado}")
-	public ResponseEntity<?> getVeiculosBySituacao(@PathVariable boolean isAlugado) {	
-		return new ResponseEntity<>(repository.getBySituacao(isAlugado), HttpStatus.OK);
+	@GetMapping(value="/veiculos/situacao/{idSituacao}")
+	public ResponseEntity<?> getVeiculosBySituacao(@PathVariable int idSituacao) {	
+		return new ResponseEntity<>(repository.getBySituacao(idSituacao), HttpStatus.OK);
 	}
 }

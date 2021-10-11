@@ -14,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.UpdateTimestamp;
@@ -105,6 +106,9 @@ public class VeiculoModel implements Serializable{
 	//@JsonBackReference//(value = "cliente-locacoes")
 	@JsonIgnore
 	private List<LocacaoModel> locacoes;
+	
+	@OneToOne
+	private SituacaoVeiculoModel situacaoVeiculo;
 	
 	public String getUrlImagem() {
 		return urlImagem;
@@ -256,6 +260,14 @@ public class VeiculoModel implements Serializable{
 
 	public void setLocacoes(List<LocacaoModel> locacoes) {
 		this.locacoes = locacoes;
+	}
+
+	public SituacaoVeiculoModel getSituacaoVeiculo() {
+		return situacaoVeiculo;
+	}
+
+	public void setSituacaoVeiculo(SituacaoVeiculoModel situacaoVeiculo) {
+		this.situacaoVeiculo = situacaoVeiculo;
 	}
 	
 }

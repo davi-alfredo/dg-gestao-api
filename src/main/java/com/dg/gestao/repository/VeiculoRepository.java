@@ -11,7 +11,7 @@ import com.dg.gestao.model.VeiculoModel;
 public interface VeiculoRepository extends JpaRepository<VeiculoModel, UUID> {
 
 	
-	@Query(value = "SELECT * FROM veiculo WHERE ativo=?1", nativeQuery = true )
-	List<VeiculoModel> getBySituacao(boolean alugado);
+	@Query(value = "SELECT * FROM veiculo WHERE situacao_veiculo_id=?1", nativeQuery = true )
+	List<VeiculoModel> getBySituacao(int idSituacao);
 
 }
