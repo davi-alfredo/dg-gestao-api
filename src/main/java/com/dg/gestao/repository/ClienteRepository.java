@@ -10,7 +10,7 @@ import com.dg.gestao.model.ClienteModel;
 
 public interface ClienteRepository extends JpaRepository<ClienteModel, UUID> {
 
-	@Query(value = "SELECT * FROM cliente WHERE ativo=?1", nativeQuery = true )
+	@Query(value = "SELECT * FROM cliente WHERE situacao_cliente_id=?1", nativeQuery = true )
 	List<ClienteModel> getBySituacao(int idSituacao);
 
 }
