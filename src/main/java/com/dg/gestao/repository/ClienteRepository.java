@@ -11,6 +11,6 @@ import com.dg.gestao.model.ClienteModel;
 public interface ClienteRepository extends JpaRepository<ClienteModel, UUID> {
 
 	@Query(value = "SELECT * FROM cliente WHERE ativo=?1", nativeQuery = true )
-	List<ClienteModel> getBySituacao(boolean isAtivo);
+	List<ClienteModel> getBySituacao(int idSituacao);
 
 }

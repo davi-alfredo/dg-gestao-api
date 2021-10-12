@@ -14,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.UpdateTimestamp;
@@ -76,6 +77,10 @@ public class ClienteModel implements Serializable{
 	
 	@Column(name="ativo")
 	private boolean ativo;
+	
+	@OneToOne
+	private SituacaoClienteModel situacaoCliente;
+	
 	
 	@Column(name = "updated_at")
     @UpdateTimestamp
@@ -241,6 +246,14 @@ public class ClienteModel implements Serializable{
 
 	public void setApelido(String apelido) {
 		this.apelido = apelido;
+	}
+
+	public SituacaoClienteModel getSituacaoCliente() {
+		return situacaoCliente;
+	}
+
+	public void setSituacaoCliente(SituacaoClienteModel situacaoCliente) {
+		this.situacaoCliente = situacaoCliente;
 	}
 
 }
