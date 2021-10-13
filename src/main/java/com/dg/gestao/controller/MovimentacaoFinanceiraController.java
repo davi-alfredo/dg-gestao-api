@@ -83,7 +83,7 @@ public class MovimentacaoFinanceiraController {
 	public ResponseEntity<?> getPorSituacao(@PathVariable int situacao) {
 		List<MovimentacaoFinanceiraModel> retorno = null;
 		if (situacao == 0)
-			retorno = repository.findAll();
+			retorno = repository.findAll(Sort.by(Sort.Direction.DESC, "dataVencimento"));
 		else 
 			retorno = repository.getBySituacaoPagamento(situacao);
 		
