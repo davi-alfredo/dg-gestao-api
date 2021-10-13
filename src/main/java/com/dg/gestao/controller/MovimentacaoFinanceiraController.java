@@ -44,7 +44,7 @@ public class MovimentacaoFinanceiraController {
 	@Operation(description = "Obter movimentações financeiras")
 	@GetMapping(value="/movimentacoes")
 	public ResponseEntity<?> getMovimentacoes() {
-		return new ResponseEntity<>(repository.findAll(Sort.by(Sort.Direction.DESC, "id")), HttpStatus.OK);
+		return new ResponseEntity<>(repository.findAll(Sort.by(Sort.Direction.DESC, "dataVencimento")), HttpStatus.OK);
 	}
 
 	@Operation(description = "Obter uma movimentação financeira através do Id")
