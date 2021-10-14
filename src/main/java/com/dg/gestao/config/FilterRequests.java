@@ -11,10 +11,13 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
 
 
-//@Component
-//@Order(1)
+
+@Component
+@Order(1)
 public class FilterRequests implements Filter{
 
 	 
@@ -24,11 +27,17 @@ public class FilterRequests implements Filter{
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 	    
-		HttpServletRequest req = (HttpServletRequest) request;		
+		HttpServletRequest req = (HttpServletRequest) request;
 		String path = req.getRequestURI();
 
+		HttpServletResponse novoResponse = (HttpServletResponse) response;
+		novoResponse.addHeader("Access-Control-Allow-Origin", "*");
+		novoResponse.addHeader("Access-Control-Allow-Headers", "origin, Content-Type, Accept, authorization");
+		novoResponse.addHeader("Access-Control-Allow-Credentials", "true");
+		novoResponse.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD");
+		
         if(path.startsWith("/api") == false){
-            chain.doFilter(request, response);
+            chain.doFilter(request, novoResponse);
             return;
         }
 		
@@ -36,15 +45,14 @@ public class FilterRequests implements Filter{
 		String token = req.getHeader("Token");
 		
 		if(req.getHeader("Token") != null && FirebaseAuthenticationProvider.tokenIsValid(token)) {
-			chain.doFilter(request, response);			
-		}else {
-			HttpServletResponse resp = (HttpServletResponse) response;
+			chain.doFilter(request, novoResponse);			
+		}else {			
             String error = "Invalid API KEY";
 
-            resp.reset();
-            resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.setContentLength(error.length());            
-            response.getWriter().write(error);
+            novoResponse.reset();
+            novoResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            novoResponse.setContentLength(error.length());            
+            novoResponse.getWriter().write(error);
 		}	
 		
 	}
