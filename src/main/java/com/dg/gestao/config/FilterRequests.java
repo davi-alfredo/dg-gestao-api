@@ -14,16 +14,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.dg.gestao.dto.ResponseDTO;
 import com.google.gson.Gson;
 
 
 
-@Component
-@CrossOrigin
-@Order(1)
+//@Component
+//@Order(1)
 public class FilterRequests implements Filter{
 
 	 
@@ -37,7 +35,7 @@ public class FilterRequests implements Filter{
 	    
 		HttpServletRequest req = (HttpServletRequest) request;
 		String path = req.getRequestURI();
-
+		
 		HttpServletResponse novoResponse = (HttpServletResponse) response;
 		novoResponse.addHeader("Access-Control-Allow-Origin", "*");
 		novoResponse.addHeader("Access-Control-Allow-Headers", "origin, Content-Type, Accept, authorization");
@@ -53,15 +51,12 @@ public class FilterRequests implements Filter{
 		String token = req.getHeader("Token");
 		
 		if(req.getHeader("Token") != null && FirebaseAuthenticationProvider.tokenIsValid(token)) {
-			chain.doFilter(request, novoResponse);			
+			chain.doFilter(request, novoResponse);
 		}else {			
 			ResponseDTO respDto = new ResponseDTO("Invalid API KEY"); 
 			
             novoResponse.reset();
-            novoResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            //novoResponse.setContentLength(respDto.getMensagem().length());            
-            //novoResponse.getWriter().write(error);
-            
+            novoResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);    
             PrintWriter out = response.getWriter();
             novoResponse.setContentType("application/json");
             novoResponse.setCharacterEncoding("UTF-8");
