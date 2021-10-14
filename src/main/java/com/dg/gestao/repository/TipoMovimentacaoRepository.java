@@ -2,8 +2,8 @@ package com.dg.gestao.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.dg.gestao.model.TipoPagamentoModel;
+import com.dg.gestao.model.TipoMovimentacaoModel;
 
-public interface TipoMovimentacaoRepository extends JpaRepository<TipoPagamentoModel, Integer> {
+public interface TipoMovimentacaoRepository extends JpaRepository<TipoMovimentacaoModel, Integer> {
 
 }
