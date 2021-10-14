@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dg.gestao.model.Response;
+import com.dg.gestao.dto.ResponseDTO;
 import com.dg.gestao.model.UsuarioModel;
 import com.dg.gestao.service.AutenticacaoService;
 
@@ -29,9 +29,9 @@ public class AutenticacaoController {
 	public ResponseEntity<?> autenticarUsuario(@RequestBody final UsuarioModel usuario) {
 		try {
 			service.autenticarUsuario(usuario);
-			return new ResponseEntity<>(new Response("Autenticado com sucesso."), HttpStatus.OK);
+			return new ResponseEntity<>(new ResponseDTO("Autenticado com sucesso."), HttpStatus.OK);
 		}catch(NotFoundException e) {			 
-			return new ResponseEntity<>(new Response("Usuario/Senha invalido(s)."), HttpStatus.UNAUTHORIZED);
+			return new ResponseEntity<>(new ResponseDTO("Usuario/Senha invalido(s)."), HttpStatus.UNAUTHORIZED);
 		}
 	}
 

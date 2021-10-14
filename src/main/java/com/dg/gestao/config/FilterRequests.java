@@ -1,6 +1,7 @@
 package com.dg.gestao.config;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -11,13 +12,23 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.CrossOrigin;
+
+import com.dg.gestao.dto.ResponseDTO;
+import com.google.gson.Gson;
 
 
-//@Component
-//@Order(1)
+
+@Component
+@CrossOrigin
+@Order(1)
 public class FilterRequests implements Filter{
 
 	 
+    private Gson gson = new Gson();
+
 	public void destroy() {}
 	
 	@Override
@@ -44,12 +55,19 @@ public class FilterRequests implements Filter{
 		if(req.getHeader("Token") != null && FirebaseAuthenticationProvider.tokenIsValid(token)) {
 			chain.doFilter(request, novoResponse);			
 		}else {			
-            String error = "Invalid API KEY";
-
+			ResponseDTO respDto = new ResponseDTO("Invalid API KEY"); 
+			
             novoResponse.reset();
             novoResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            novoResponse.setContentLength(error.length());            
-            novoResponse.getWriter().write(error);
+            //novoResponse.setContentLength(respDto.getMensagem().length());            
+            //novoResponse.getWriter().write(error);
+            
+            PrintWriter out = response.getWriter();
+            novoResponse.setContentType("application/json");
+            novoResponse.setCharacterEncoding("UTF-8");
+            out.print(this.gson.toJson(respDto));
+            out.flush();
+
 		}	
 		
 	}

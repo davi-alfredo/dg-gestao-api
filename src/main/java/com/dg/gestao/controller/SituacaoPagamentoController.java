@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dg.gestao.model.Response;
+import com.dg.gestao.dto.ResponseDTO;
 import com.dg.gestao.repository.SituacaoPagamentoRepository;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -35,7 +35,7 @@ public class SituacaoPagamentoController {
 		try {
 			return new ResponseEntity<>(repository.getById(id), HttpStatus.OK);
 		}catch(EntityNotFoundException e) {
-			return new ResponseEntity<>(new Response("Nenhum registro encontrado para o ID informado."), HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(new ResponseDTO("Nenhum registro encontrado para o ID informado."), HttpStatus.NOT_FOUND);
 		}
 	}
 }

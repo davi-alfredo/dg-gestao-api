@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dg.gestao.config.EncoderPassword;
+import com.dg.gestao.dto.ResponseDTO;
 import com.dg.gestao.dto.UsuarioDTO;
-import com.dg.gestao.model.Response;
 import com.dg.gestao.model.UsuarioModel;
 import com.dg.gestao.repository.UsuarioRepository;
 
@@ -44,7 +44,7 @@ public class UsuarioController {
 		try {
 			return new ResponseEntity<>(new UsuarioDTO(repository.getById(id)), HttpStatus.OK);
 		}catch(EntityNotFoundException e) {
-			return new ResponseEntity<>(new Response("Nenhum registro encontrado para o ID informado."), HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(new ResponseDTO("Nenhum registro encontrado para o ID informado."), HttpStatus.NOT_FOUND);
 		}
 	}
 	
@@ -54,7 +54,7 @@ public class UsuarioController {
 			usuario.setPassword(EncoderPassword.encode(usuario.getPassword()));
 			return new ResponseEntity<>(new UsuarioDTO(repository.save(usuario)), HttpStatus.CREATED);
 		}catch(org.springframework.dao.DataIntegrityViolationException e) {
-			return new ResponseEntity<>(new Response("E-mail "+usuario.getEmail() +" ja existe!"), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(new ResponseDTO("E-mail "+usuario.getEmail() +" ja existe!"), HttpStatus.BAD_REQUEST);
 		}
 			
 	}

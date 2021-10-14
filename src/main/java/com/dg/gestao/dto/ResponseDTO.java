@@ -1,8 +1,8 @@
-package com.dg.gestao.model;
+package com.dg.gestao.dto;
 
 import java.io.Serializable;
 
-public class Response implements Serializable{
+public class ResponseDTO implements Serializable{
 
 	/**
 	 * 
@@ -11,7 +11,7 @@ public class Response implements Serializable{
 	
 	private String mensagem;
 
-	public Response(String mensagem) {
+	public ResponseDTO(String mensagem) {
 		this.mensagem = mensagem;
 	}
 	
