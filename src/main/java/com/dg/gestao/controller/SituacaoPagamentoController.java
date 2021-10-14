@@ -26,12 +26,12 @@ public class SituacaoPagamentoController {
 	SituacaoPagamentoRepository repository;
 	
 	@GetMapping(value="/situacoes-pagamento")
-	public ResponseEntity<?> getTiposPagamento() {		
+	public ResponseEntity<?> getSituacoesPagamento() {		
 		return new ResponseEntity<>(repository.findAll(), HttpStatus.OK);
 	}
 
 	@GetMapping(value="/situacoes-pagamento/{id}")
-	public ResponseEntity<?> getTipoPagamento(@PathVariable int id) {
+	public ResponseEntity<?> getSituacoesPagamento(@PathVariable int id) {
 		try {
 			return new ResponseEntity<>(repository.getById(id), HttpStatus.OK);
 		}catch(EntityNotFoundException e) {
