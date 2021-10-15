@@ -57,19 +57,21 @@ public class MovimentacaoFinanceiraController {
 		}
 	}
 	
-	@Operation(description = "Adicionar uma nova Movimentação Financeira")
-	@PostMapping(value="/movimentacoes")
-	public ResponseEntity<?> addMovimentacao(@RequestBody MovimentacaoFinanceiraModel movimentacaoFinanceiraModel) {
-		return new ResponseEntity<>(repository.save(movimentacaoFinanceiraModel), HttpStatus.CREATED);
-	}
-	
-	
 	@Operation(description = "Obter movimentações financeiras")
 	@GetMapping(value="/movimentacoes/consolidado/{ano}")
 	public ResponseEntity<?> getConsolidadoAnual(@PathVariable int ano) {
 		List<MovimentacaoDTO> retorno = service.obterMovimentacaoAnual(ano);
 		return new ResponseEntity<>(retorno, HttpStatus.OK);
 	}
+
+	
+	@Operation(description = "Obter movimentações financeiras por ano e mes")
+	@GetMapping(value="/movimentacoes/ano/{ano}/mes/{mes}")
+	public ResponseEntity<?> getPorAnoMes(@PathVariable int ano, @PathVariable int mes) {
+		List<MovimentacaoFinanceiraModel> retorno = repository.getByAnoMes(ano, mes);
+		return new ResponseEntity<>(retorno, HttpStatus.OK);
+	}
+
 	
 	@Operation(description = "Obter movimentações financeiras")
 	@GetMapping(value="/movimentacoes/totais/{ano}")
@@ -92,32 +94,34 @@ public class MovimentacaoFinanceiraController {
 		return new ResponseEntity<>(retorno, HttpStatus.OK);
 	}
 	
-	@Operation(description = "Remover uma movimentação")
-	@DeleteMapping(value="/movimentacoes/{id}")
-	public ResponseEntity<?> removeCliente(@PathVariable final Long id) {	
-		try {
-			MovimentacaoFinanceiraModel model = repository.getById(id);
-			repository.delete(model);
-			return new ResponseEntity<>("Removido com sucesso!", HttpStatus.OK);
-		}catch(JpaObjectRetrievalFailureException e) {
-			return new ResponseEntity<>("Nenhum registro encontrado para o ID informado.", HttpStatus.NOT_FOUND);
-		}
+	@Operation(description = "Obter movimentações Por Tipo de Movimentação")
+	@GetMapping(value="/movimentacoes/tipo-movimentacao/{tipoMovimentacao}")
+	public ResponseEntity<?> getPorTipoMovimentacao(@PathVariable int tipoMovimentacao) {
+		List<MovimentacaoFinanceiraModel> retorno = null;
+		if (tipoMovimentacao == 0)
+			retorno = repository.getComPendencia();
+		else 
+			retorno = repository.getByTipoMovimentacao(tipoMovimentacao);
+		
+			
+		
+		return new ResponseEntity<>(retorno, HttpStatus.OK);
 	}
 	
-	@Operation(description = "Atualizar uma movimentação")
-	@PutMapping(value="/movimentacoes")
-	public ResponseEntity<?> updateCliente(@RequestBody final MovimentacaoFinanceiraModel movimentacao) {
-		try {		
-			if(repository.existsById(movimentacao.getId()))
-				return new ResponseEntity<>(repository.save(movimentacao), HttpStatus.OK);
-			else 
-				return new ResponseEntity<>("Nenhum registro encontrado para o ID informado.", HttpStatus.NOT_FOUND);
-		}catch(JpaObjectRetrievalFailureException e) {
-			return new ResponseEntity<>("Nenhum registro encontrado para o ID informado.", HttpStatus.NOT_FOUND);
-		}
+	@Operation(description = "Obter movimentações Com alguma Pendencia")
+	@GetMapping(value="/movimentacoes/pendente/{situacao}")
+	public ResponseEntity<?> getComPendencias(@PathVariable int situacao) {
+		List<MovimentacaoFinanceiraModel> retorno = null;
+		if (situacao == 0)
+			retorno = repository.getComPendencia();
+		else 
+			retorno = repository.getBySituacaoPagamento(situacao);
+		
+			
+		
+		return new ResponseEntity<>(retorno, HttpStatus.OK);
 	}
-	
-	
+
 	@Operation(description = "Obter Movimentações do Veículo através do Id")
 	@ResponseStatus(code = HttpStatus.OK)
 	@GetMapping(value="/movimentacoes/veiculos/{id}")
@@ -138,5 +142,37 @@ public class MovimentacaoFinanceiraController {
 		}catch(JpaObjectRetrievalFailureException e) {
 			return new ResponseEntity<>("Nenhum registro encontrado para o ID informado.", HttpStatus.NOT_FOUND);
 		}
+	}
+	
+	@Operation(description = "Adicionar uma nova Movimentação Financeira")
+	@PostMapping(value="/movimentacoes")
+	public ResponseEntity<?> addMovimentacao(@RequestBody MovimentacaoFinanceiraModel movimentacaoFinanceiraModel) {
+		return new ResponseEntity<>(repository.save(movimentacaoFinanceiraModel), HttpStatus.CREATED);
+	}
+
+	@Operation(description = "Atualizar uma movimentação")
+	@PutMapping(value="/movimentacoes")
+	public ResponseEntity<?> updateCliente(@RequestBody final MovimentacaoFinanceiraModel movimentacao) {
+		try {		
+			if(repository.existsById(movimentacao.getId()))
+				return new ResponseEntity<>(repository.save(movimentacao), HttpStatus.OK);
+			else 
+				return new ResponseEntity<>("Nenhum registro encontrado para o ID informado.", HttpStatus.NOT_FOUND);
+		}catch(JpaObjectRetrievalFailureException e) {
+			return new ResponseEntity<>("Nenhum registro encontrado para o ID informado.", HttpStatus.NOT_FOUND);
+		}
 	}	
+	
+	@Operation(description = "Remover uma movimentação")
+	@DeleteMapping(value="/movimentacoes/{id}")
+	public ResponseEntity<?> removeCliente(@PathVariable final Long id) {	
+		try {
+			MovimentacaoFinanceiraModel model = repository.getById(id);
+			repository.delete(model);
+			return new ResponseEntity<>("Removido com sucesso!", HttpStatus.OK);
+		}catch(JpaObjectRetrievalFailureException e) {
+			return new ResponseEntity<>("Nenhum registro encontrado para o ID informado.", HttpStatus.NOT_FOUND);
+		}
+	}
+	
 }

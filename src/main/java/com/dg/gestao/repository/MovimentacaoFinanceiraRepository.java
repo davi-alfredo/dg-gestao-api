@@ -26,6 +26,12 @@ public interface MovimentacaoFinanceiraRepository extends JpaRepository<Moviment
 	@Query(value = "SELECT * FROM movimentacao_financeira WHERE situacao_pagamento_id=?1 order by data_vencimento desc", nativeQuery = true )
 	List<MovimentacaoFinanceiraModel> getBySituacaoPagamento(int situacao);
 	
+	@Query(value = "SELECT * FROM movimentacao_financeira WHERE tipo_movimentacao_id=?1 order by data_vencimento desc", nativeQuery = true )
+	List<MovimentacaoFinanceiraModel> getByTipoMovimentacao(int tipoMovimentacao);
+	
+	@Query(value = "SELECT * FROM movimentacao_financeira WHERE situacao_pagamento_id > 1 order by data_vencimento desc", nativeQuery = true )
+	List<MovimentacaoFinanceiraModel> getComPendencia();
+	
 	@Query(value = "SELECT * FROM movimentacao_financeira WHERE situacao_pagamento_id = 1", nativeQuery = true )
 	List<MovimentacaoFinanceiraModel> getPagos();
 
@@ -37,4 +43,7 @@ public interface MovimentacaoFinanceiraRepository extends JpaRepository<Moviment
 	
 	@Query(value = "SELECT * FROM movimentacao_financeira WHERE cliente_id=?1 order by data_vencimento desc", nativeQuery = true )
 	List<MovimentacaoFinanceiraModel> getByCliente(UUID idCliente);
+
+	@Query(value= "SELECT * FROM movimentacao_financeira WHERE EXTRACT(YEAR FROM data_pagamento) =?1 and EXTRACT(MONTH FROM data_pagamento) =?2", nativeQuery = true)
+	List<MovimentacaoFinanceiraModel> getByAnoMes(int ano, int mes);
 }
