@@ -62,6 +62,7 @@ public class MovimentacaoFinanceiraService {
 					if(movimentacao == null) {
 						movimentacao = new MovimentacaoDTO();
 						movimentacao.setMes(getMes((Double)objetos[2]));
+						movimentacao.setMesNumerico(((Double)objetos[2]).intValue());
 					}
 					
 					if((Integer)objetos[0] == 1)

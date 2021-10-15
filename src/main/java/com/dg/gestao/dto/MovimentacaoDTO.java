@@ -9,6 +9,7 @@ public class MovimentacaoDTO implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	private String mes;
+	private int mesNumerico;
 	private double entradas;
 	private double saidas;
 	private double total;
@@ -36,6 +37,12 @@ public class MovimentacaoDTO implements Serializable{
 	}
 	public void setTotal(double total) {
 		this.total = total;
+	}
+	public int getMesNumerico() {
+		return mesNumerico;
+	}
+	public void setMesNumerico(int mesNumerico) {
+		this.mesNumerico = mesNumerico;
 	}
 
 }
