@@ -20,8 +20,8 @@ import com.google.gson.Gson;
 
 
 
-//@Component
-//@Order(1)
+@Component
+@Order(1)
 public class FilterRequests implements Filter{
 
 	 
