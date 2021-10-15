@@ -99,7 +99,7 @@ public class MovimentacaoFinanceiraController {
 	public ResponseEntity<?> getPorTipoMovimentacao(@PathVariable int tipoMovimentacao) {
 		List<MovimentacaoFinanceiraModel> retorno = null;
 		if (tipoMovimentacao == 0)
-			retorno = repository.getComPendencia();
+			retorno = repository.findAll(Sort.by(Sort.Direction.DESC, "dataVencimento"));
 		else 
 			retorno = repository.getByTipoMovimentacao(tipoMovimentacao);
 		
