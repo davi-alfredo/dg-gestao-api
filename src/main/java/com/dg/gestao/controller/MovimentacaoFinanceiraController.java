@@ -144,6 +144,28 @@ public class MovimentacaoFinanceiraController {
 		}
 	}
 	
+	@Operation(description = "Obter Movimentações do Veículo através do Id")
+	@ResponseStatus(code = HttpStatus.OK)
+	@GetMapping(value="/movimentacoes/veiculos/{id}/pendentes")
+	public ResponseEntity<?> getMovimentacoesPendentesVeiculo(@PathVariable UUID id) {
+		try {
+			return new ResponseEntity<>(repository.getPendenciasByVeiculo(id), HttpStatus.OK);
+		}catch(JpaObjectRetrievalFailureException e) {
+			return new ResponseEntity<>("Nenhum registro encontrado para o ID informado.", HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	@Operation(description = "Obter Movimentações do Cliente através do Id")
+	@ResponseStatus(code = HttpStatus.OK)
+	@GetMapping(value="/movimentacoes/clientes/{id}/pendentes")
+	public ResponseEntity<?> getMovimentacoesPendentesCliente(@PathVariable UUID id) {
+		try {
+			return new ResponseEntity<>(repository.getPendenciasByCliente(id), HttpStatus.OK);
+		}catch(JpaObjectRetrievalFailureException e) {
+			return new ResponseEntity<>("Nenhum registro encontrado para o ID informado.", HttpStatus.NOT_FOUND);
+		}
+	}
+	
 	@Operation(description = "Adicionar uma nova Movimentação Financeira")
 	@PostMapping(value="/movimentacoes")
 	public ResponseEntity<?> addMovimentacao(@RequestBody MovimentacaoFinanceiraModel movimentacaoFinanceiraModel) {
