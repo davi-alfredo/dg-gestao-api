@@ -12,9 +12,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.core.annotation.Order;
-import org.springframework.stereotype.Component;
-
 import com.dg.gestao.dto.ResponseDTO;
 import com.google.gson.Gson;
 
@@ -37,7 +34,7 @@ public class FilterRequests implements Filter{
 		String path = req.getRequestURI();
 		
 		HttpServletResponse novoResponse = (HttpServletResponse) response;
-		novoResponse.addHeader("Access-Control-Allow-Origin", "https://platform.preview.appgyver.com");
+		novoResponse.addHeader("Access-Control-Allow-Origin", "*");
 		novoResponse.addHeader("Access-Control-Allow-Headers", "origin, Content-Type, Accept, authorization");
 		novoResponse.addHeader("Access-Control-Allow-Credentials", "true");
 		novoResponse.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD");
