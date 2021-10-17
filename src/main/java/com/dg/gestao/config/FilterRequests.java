@@ -12,13 +12,16 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
+
 import com.dg.gestao.dto.ResponseDTO;
 import com.google.gson.Gson;
 
 
 
-//@Component
-//@Order(1)
+@Component
+@Order(1)
 public class FilterRequests implements Filter{
 
 	 
@@ -39,6 +42,7 @@ public class FilterRequests implements Filter{
 		novoResponse.addHeader("Access-Control-Allow-Credentials", "true");
 		novoResponse.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD");
 		
+		System.out.println("####### PASSOU AQUI 1 #########");
         if(path.startsWith("/api") == false){
             chain.doFilter(request, novoResponse);
             return;
@@ -48,8 +52,13 @@ public class FilterRequests implements Filter{
 		String token = req.getHeader("Token");
 		
 		if(req.getHeader("Token") != null && FirebaseAuthenticationProvider.tokenIsValid(token)) {
+			System.out.println("####### PASSOU AQUI 2 #########");
 			chain.doFilter(request, novoResponse);
+			System.out.println("####### PASSOU AQUI 3 #########");
+
 		}else {			
+			System.out.println("####### PASSOU AQUI 4 #########");
+
 			ResponseDTO respDto = new ResponseDTO("Invalid API KEY"); 
 			
             novoResponse.reset();
@@ -59,6 +68,8 @@ public class FilterRequests implements Filter{
             novoResponse.setCharacterEncoding("UTF-8");
             out.print(this.gson.toJson(respDto));
             out.flush();
+    		System.out.println("####### PASSOU AQUI 5 #########");
+
 
 		}	
 		
