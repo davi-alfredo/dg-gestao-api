@@ -50,7 +50,7 @@ public class FilterRequests implements Filter{
 		
 		
 		String token = req.getHeader("Token");
-		
+		System.out.println("####### TOKEN: "+token+" #########");
 		if(req.getHeader("Token") != null && FirebaseAuthenticationProvider.tokenIsValid(token)) {
 			System.out.println("####### PASSOU AQUI 2 #########");
 			chain.doFilter(request, novoResponse);
