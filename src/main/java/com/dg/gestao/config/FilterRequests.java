@@ -12,7 +12,6 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import com.dg.gestao.dto.ResponseDTO;
@@ -20,8 +19,7 @@ import com.google.gson.Gson;
 
 
 
-@Component
-@Order(1)
+//@Component
 public class FilterRequests implements Filter{
 
 	 
