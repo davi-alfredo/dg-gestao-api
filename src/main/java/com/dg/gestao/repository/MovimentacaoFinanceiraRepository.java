@@ -26,7 +26,11 @@ public interface MovimentacaoFinanceiraRepository extends JpaRepository<Moviment
 	@Query(value = "SELECT * FROM movimentacao_financeira WHERE situacao_pagamento_id=?1 order by data_vencimento desc", nativeQuery = true )
 	List<MovimentacaoFinanceiraModel> getBySituacaoPagamento(int situacao);
 	
-	@Query(value = "SELECT * FROM movimentacao_financeira WHERE tipo_movimentacao_id=?1 and situacao_pagamento_id < 3 order by data_vencimento desc", nativeQuery = true )
+	
+	@Query(value = "SELECT * FROM movimentacao_financeira order by data_vencimento desc limit 50", nativeQuery = true )
+	List<MovimentacaoFinanceiraModel> getAllLimit();
+	
+	@Query(value = "SELECT * FROM movimentacao_financeira WHERE tipo_movimentacao_id=?1 and situacao_pagamento_id < 3 order by data_vencimento desc limit 50", nativeQuery = true )
 	List<MovimentacaoFinanceiraModel> getByTipoMovimentacao(int tipoMovimentacao);
 	
 	@Query(value = "SELECT * FROM movimentacao_financeira WHERE situacao_pagamento_id > 1 order by data_vencimento desc", nativeQuery = true )

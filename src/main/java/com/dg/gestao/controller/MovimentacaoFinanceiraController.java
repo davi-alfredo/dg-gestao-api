@@ -98,8 +98,9 @@ public class MovimentacaoFinanceiraController {
 	@GetMapping(value="/movimentacoes/tipo-movimentacao/{tipoMovimentacao}")
 	public ResponseEntity<?> getPorTipoMovimentacao(@PathVariable int tipoMovimentacao) {
 		List<MovimentacaoFinanceiraModel> retorno = null;
+		////retorno = repository.findAll(Sort.by(Sort.Direction.DESC, "dataVencimento"));
 		if (tipoMovimentacao == 0)
-			retorno = repository.findAll(Sort.by(Sort.Direction.DESC, "dataVencimento"));
+			retorno = repository.getAllLimit();
 		else 
 			retorno = repository.getByTipoMovimentacao(tipoMovimentacao);
 		
