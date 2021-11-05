@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dg.gestao.dto.ResponseDTO;
-import com.dg.gestao.model.UsuarioModel;
-import com.dg.gestao.service.AutenticacaoService;
+import com.dg.gestao.entities.Usuario;
+import com.dg.gestao.services.AutenticacaoService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import javassist.NotFoundException;
@@ -26,7 +26,7 @@ public class AutenticacaoController {
 	AutenticacaoService service;
 	
 	@PostMapping(value="/autenticacao")
-	public ResponseEntity<?> autenticarUsuario(@RequestBody final UsuarioModel usuario) {
+	public ResponseEntity<?> autenticarUsuario(@RequestBody final Usuario usuario) {
 		try {
 			service.autenticarUsuario(usuario);
 			return new ResponseEntity<>(new ResponseDTO("Autenticado com sucesso."), HttpStatus.OK);

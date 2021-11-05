@@ -1,4 +1,4 @@
-package com.dg.gestao.model;
+package com.dg.gestao.entities;
 
 import java.io.Serializable;
 
@@ -10,13 +10,14 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tipo_pagamento")
-public class TipoPagamentoModel implements Serializable{
+@Table(name = "situacao_pagamento")
+public class SituacaoPagamento implements Serializable{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
 	
 	@Id
 	@Column
@@ -25,7 +26,7 @@ public class TipoPagamentoModel implements Serializable{
 	
 	@Column(length = 100, nullable = false)
 	private String descricao;
-
+	
 	public Integer getId() {
 		return id;
 	}
@@ -41,5 +42,7 @@ public class TipoPagamentoModel implements Serializable{
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
+	
+	
 
 }

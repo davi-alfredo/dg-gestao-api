@@ -1,13 +1,17 @@
-package com.dg.gestao.service;
+package com.dg.gestao.services;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.dg.gestao.dto.MovimentacaoDTO;
-import com.dg.gestao.repository.MovimentacaoFinanceiraRepository;
+import com.dg.gestao.dto.MovimentacaoFinanceiraDTO;
+import com.dg.gestao.entities.MovimentacaoFinanceira;
+import com.dg.gestao.repositories.MovimentacaoFinanceiraRepository;
 
 
 @Service
@@ -17,10 +21,21 @@ public class MovimentacaoFinanceiraService {
 	MovimentacaoFinanceiraRepository repository;	
 	
 	
+	public Page<MovimentacaoFinanceiraDTO> findAll(Pageable pageable) {		
+		Page<MovimentacaoFinanceira> result = repository.findAll(pageable);		
+		return result.map(x -> new MovimentacaoFinanceiraDTO(x));		
+	}
+	
 	public List<MovimentacaoDTO> obterMovimentacaoAnual(int ano) {
 		List<?> consolidado = repository.getConsolidado(ano);
 		return  extrairConsolidado(consolidado);
 	}
+	
+	public List<MovimentacaoDTO> getMovimentacaoAgrupada(int ano) {
+		List<MovimentacaoDTO> consolidado = repository.getMovimentacaoAgrupada();
+		return  consolidado;
+	}
+	
 	
 	public MovimentacaoDTO obterMovimentacaoTotaisAnual(int ano) {
 		List<?> consolidado = repository.getTotaisAnual(ano);

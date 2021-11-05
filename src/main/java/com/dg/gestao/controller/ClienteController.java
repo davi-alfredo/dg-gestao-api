@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dg.gestao.model.ClienteModel;
-import com.dg.gestao.repository.ClienteRepository;
+import com.dg.gestao.entities.Cliente;
+import com.dg.gestao.repositories.ClienteRepository;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -57,7 +57,7 @@ public class ClienteController {
 	
 	@Operation(description = "Adicionar um novo cliente")
 	@PostMapping(value="/clientes")
-	public ResponseEntity<?> addCliente(@RequestBody final ClienteModel cliente) {
+	public ResponseEntity<?> addCliente(@RequestBody final Cliente cliente) {
 		return new ResponseEntity<>(repository.save(cliente), HttpStatus.CREATED);
 	}
 	
@@ -65,7 +65,7 @@ public class ClienteController {
 	@DeleteMapping(value="/clientes/{id}")
 	public ResponseEntity<?> removeCliente(@PathVariable final UUID id) {	
 		try {
-			ClienteModel model = repository.getById(id);
+			Cliente model = repository.getById(id);
 			repository.delete(model);
 			return new ResponseEntity<>("Removido com sucesso!", HttpStatus.OK);
 		}catch(JpaObjectRetrievalFailureException e) {
@@ -75,7 +75,7 @@ public class ClienteController {
 	
 	@Operation(description = "Atualizar um cliente")
 	@PutMapping(value="/clientes")
-	public ResponseEntity<?> updateCliente(@RequestBody final ClienteModel cliente) {
+	public ResponseEntity<?> updateCliente(@RequestBody final Cliente cliente) {
 		try {		
 			if(repository.existsById(cliente.getId()))
 				return new ResponseEntity<>(repository.save(cliente), HttpStatus.OK);

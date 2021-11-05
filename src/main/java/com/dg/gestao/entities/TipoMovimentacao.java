@@ -1,4 +1,4 @@
-package com.dg.gestao.model;
+package com.dg.gestao.entities;
 
 import java.io.Serializable;
 
@@ -10,14 +10,14 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "situacao_veiculo")
-public class SituacaoVeiculoModel implements Serializable{
+@Table(name = "tipo_movimentacao")
+public class TipoMovimentacao implements Serializable{
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@Column
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -41,5 +41,4 @@ public class SituacaoVeiculoModel implements Serializable{
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-
 }

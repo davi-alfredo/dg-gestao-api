@@ -22,9 +22,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dg.gestao.dto.MovimentacaoDTO;
-import com.dg.gestao.model.MovimentacaoFinanceiraModel;
-import com.dg.gestao.repository.MovimentacaoFinanceiraRepository;
-import com.dg.gestao.service.MovimentacaoFinanceiraService;
+import com.dg.gestao.entities.MovimentacaoFinanceira;
+import com.dg.gestao.repositories.MovimentacaoFinanceiraRepository;
+import com.dg.gestao.services.MovimentacaoFinanceiraService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -65,10 +65,18 @@ public class MovimentacaoFinanceiraController {
 	}
 
 	
+	@Operation(description = "Obter movimentações financeiras")
+	@GetMapping(value="/movimentacoes/consolidado-2/{ano}")
+	public ResponseEntity<?> getMovimentacaoAgrupada(@PathVariable int ano) {
+		List<MovimentacaoDTO> retorno = service.getMovimentacaoAgrupada(ano);
+		return new ResponseEntity<>(retorno, HttpStatus.OK);
+	}
+	
+	
 	@Operation(description = "Obter movimentações financeiras por ano e mes")
 	@GetMapping(value="/movimentacoes/ano/{ano}/mes/{mes}")
 	public ResponseEntity<?> getPorAnoMes(@PathVariable int ano, @PathVariable int mes) {
-		List<MovimentacaoFinanceiraModel> retorno = repository.getByAnoMes(ano, mes);
+		List<MovimentacaoFinanceira> retorno = repository.getByAnoMes(ano, mes);
 		return new ResponseEntity<>(retorno, HttpStatus.OK);
 	}
 
@@ -83,7 +91,7 @@ public class MovimentacaoFinanceiraController {
 	@Operation(description = "Obter movimentações Por Situação do Pagamento")
 	@GetMapping(value="/movimentacoes/situacao/{situacao}")
 	public ResponseEntity<?> getPorSituacao(@PathVariable int situacao) {
-		List<MovimentacaoFinanceiraModel> retorno = null;
+		List<MovimentacaoFinanceira> retorno = null;
 		if (situacao == 0)
 			retorno = repository.findAll(Sort.by(Sort.Direction.DESC, "dataVencimento"));
 		else 
@@ -97,7 +105,7 @@ public class MovimentacaoFinanceiraController {
 	@Operation(description = "Obter movimentações Por Tipo de Movimentação")
 	@GetMapping(value="/movimentacoes/tipo-movimentacao/{tipoMovimentacao}")
 	public ResponseEntity<?> getPorTipoMovimentacao(@PathVariable int tipoMovimentacao) {
-		List<MovimentacaoFinanceiraModel> retorno = null;
+		List<MovimentacaoFinanceira> retorno = null;
 		////retorno = repository.findAll(Sort.by(Sort.Direction.DESC, "dataVencimento"));
 		if (tipoMovimentacao == 0)
 			retorno = repository.getAllLimit();
@@ -112,7 +120,7 @@ public class MovimentacaoFinanceiraController {
 	@Operation(description = "Obter movimentações Com alguma Pendencia")
 	@GetMapping(value="/movimentacoes/pendente/{situacao}")
 	public ResponseEntity<?> getComPendencias(@PathVariable int situacao) {
-		List<MovimentacaoFinanceiraModel> retorno = null;
+		List<MovimentacaoFinanceira> retorno = null;
 		if (situacao == 0)
 			retorno = repository.getComPendencia();
 		else 
@@ -169,13 +177,13 @@ public class MovimentacaoFinanceiraController {
 	
 	@Operation(description = "Adicionar uma nova Movimentação Financeira")
 	@PostMapping(value="/movimentacoes")
-	public ResponseEntity<?> addMovimentacao(@RequestBody MovimentacaoFinanceiraModel movimentacaoFinanceiraModel) {
+	public ResponseEntity<?> addMovimentacao(@RequestBody MovimentacaoFinanceira movimentacaoFinanceiraModel) {
 		return new ResponseEntity<>(repository.save(movimentacaoFinanceiraModel), HttpStatus.CREATED);
 	}
 
 	@Operation(description = "Atualizar uma movimentação")
 	@PutMapping(value="/movimentacoes")
-	public ResponseEntity<?> updateCliente(@RequestBody final MovimentacaoFinanceiraModel movimentacao) {
+	public ResponseEntity<?> updateCliente(@RequestBody final MovimentacaoFinanceira movimentacao) {
 		try {		
 			if(repository.existsById(movimentacao.getId()))
 				return new ResponseEntity<>(repository.save(movimentacao), HttpStatus.OK);
@@ -190,7 +198,7 @@ public class MovimentacaoFinanceiraController {
 	@DeleteMapping(value="/movimentacoes/{id}")
 	public ResponseEntity<?> removeCliente(@PathVariable final Long id) {	
 		try {
-			MovimentacaoFinanceiraModel model = repository.getById(id);
+			MovimentacaoFinanceira model = repository.getById(id);
 			repository.delete(model);
 			return new ResponseEntity<>("Removido com sucesso!", HttpStatus.OK);
 		}catch(JpaObjectRetrievalFailureException e) {

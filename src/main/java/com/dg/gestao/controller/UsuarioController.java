@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dg.gestao.config.EncoderPassword;
 import com.dg.gestao.dto.ResponseDTO;
 import com.dg.gestao.dto.UsuarioDTO;
-import com.dg.gestao.model.UsuarioModel;
-import com.dg.gestao.repository.UsuarioRepository;
+import com.dg.gestao.entities.Usuario;
+import com.dg.gestao.repositories.UsuarioRepository;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -49,7 +49,7 @@ public class UsuarioController {
 	}
 	
 	@PostMapping(value="/usuarios")
-	public ResponseEntity<?> addUsuario(@RequestBody UsuarioModel usuario) {
+	public ResponseEntity<?> addUsuario(@RequestBody Usuario usuario) {
 		try {
 			usuario.setPassword(EncoderPassword.encode(usuario.getPassword()));
 			return new ResponseEntity<>(new UsuarioDTO(repository.save(usuario)), HttpStatus.CREATED);
@@ -60,10 +60,10 @@ public class UsuarioController {
 	}
 	
 	
-	private List<UsuarioDTO> ListUsuarioModelToDTO(List<UsuarioModel> usuariosModel){
+	private List<UsuarioDTO> ListUsuarioModelToDTO(List<Usuario> usuariosModel){
 		
 		List<UsuarioDTO> usuariosDTO = new ArrayList<UsuarioDTO>();
-		for (UsuarioModel usuarioModel : usuariosModel) {
+		for (Usuario usuarioModel : usuariosModel) {
 			usuariosDTO.add(new UsuarioDTO(usuarioModel));
 		}		
 		return usuariosDTO;

@@ -1,4 +1,4 @@
-package com.dg.gestao.model;
+package com.dg.gestao.entities;
 
 import java.io.Serializable;
 
@@ -10,8 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "situacao_cliente")
-public class SituacaoClienteModel implements Serializable{
+@Table(name = "situacao_veiculo")
+public class SituacaoVeiculo implements Serializable{
 
 	/**
 	 * 

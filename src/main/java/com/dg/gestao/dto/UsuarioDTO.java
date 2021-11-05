@@ -8,7 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import com.dg.gestao.model.UsuarioModel;
+import com.dg.gestao.entities.Usuario;
 
 public class UsuarioDTO implements Serializable{
 
@@ -26,7 +26,7 @@ public class UsuarioDTO implements Serializable{
 	private String email;
 	
 	
-	public UsuarioDTO(UsuarioModel usuarioModel) {		
+	public UsuarioDTO(Usuario usuarioModel) {		
 		this.id = usuarioModel.getId();
 		this.email = usuarioModel.getEmail();		
 	}

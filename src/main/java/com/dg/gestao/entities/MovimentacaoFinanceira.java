@@ -1,4 +1,4 @@
-package com.dg.gestao.model;
+package com.dg.gestao.entities;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -25,7 +25,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Table(name = "movimentacao_financeira")
 //@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, 
 //property  = "movimentacao_id", scope     = Long.class)
-public class MovimentacaoFinanceiraModel implements Serializable{
+public class MovimentacaoFinanceira implements Serializable{
 
 		/**
 		 * 
@@ -43,21 +43,21 @@ public class MovimentacaoFinanceiraModel implements Serializable{
 		@ManyToOne(fetch = FetchType.LAZY)
 		@JoinColumn(name="cliente_id")
 		//@JsonManagedReference//(value = "cliente-movimentacoes")
-		private ClienteModel cliente;
+		private Cliente cliente;
 		
 		@ManyToOne(fetch = FetchType.LAZY)
 		@JoinColumn(name="veiculo_id")
 		//@JsonManagedReference//(value = "veiculo-movimentacoes")
-		private VeiculoModel veiculo;
+		private Veiculo veiculo;
 		
 		@OneToOne
-		private TipoMovimentacaoModel tipoMovimentacao;
+		private TipoMovimentacao tipoMovimentacao;
 		
 		@OneToOne
-		private TipoPagamentoModel tipoPagamento;	
+		private TipoPagamento tipoPagamento;	
 		
 		@OneToOne
-		private SituacaoPagamentoModel situacaoPagamento;	
+		private SituacaoPagamento situacaoPagamento;	
 						
 		@Column(name="data_vencimento")
 	    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
@@ -111,35 +111,35 @@ public class MovimentacaoFinanceiraModel implements Serializable{
 			this.valor = valor;
 		}		
 		
-		public ClienteModel getCliente() {
+		public Cliente getCliente() {
 			return cliente;
 		}
 
-		public void setCliente(ClienteModel cliente) {
+		public void setCliente(Cliente cliente) {
 			this.cliente = cliente;
 		}
 
-		public VeiculoModel getVeiculo() {
+		public Veiculo getVeiculo() {
 			return veiculo;
 		}
 
-		public void setVeiculo(VeiculoModel veiculo) {
+		public void setVeiculo(Veiculo veiculo) {
 			this.veiculo = veiculo;
 		}
 
-		public TipoMovimentacaoModel getTipoMovimentacao() {
+		public TipoMovimentacao getTipoMovimentacao() {
 			return tipoMovimentacao;
 		}
 
-		public void setTipoMovimentacao(TipoMovimentacaoModel tipoMovimentacao) {
+		public void setTipoMovimentacao(TipoMovimentacao tipoMovimentacao) {
 			this.tipoMovimentacao = tipoMovimentacao;
 		}
 
-		public TipoPagamentoModel getTipoPagamento() {
+		public TipoPagamento getTipoPagamento() {
 			return tipoPagamento;
 		}
 
-		public void setTipoPagamento(TipoPagamentoModel tipoPagamento) {
+		public void setTipoPagamento(TipoPagamento tipoPagamento) {
 			this.tipoPagamento = tipoPagamento;
 		}
 
@@ -175,11 +175,11 @@ public class MovimentacaoFinanceiraModel implements Serializable{
 			this.dataAtualizacao = dataAtualizacao;
 		}
 
-		public SituacaoPagamentoModel getSituacaoPagamento() {
+		public SituacaoPagamento getSituacaoPagamento() {
 			return situacaoPagamento;
 		}
 
-		public void setSituacaoPagamento(SituacaoPagamentoModel situacaoPagamento) {
+		public void setSituacaoPagamento(SituacaoPagamento situacaoPagamento) {
 			this.situacaoPagamento = situacaoPagamento;
 		}
 

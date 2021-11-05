@@ -2,6 +2,8 @@ package com.dg.gestao.dto;
 
 import java.io.Serializable;
 
+import com.dg.gestao.entities.TipoMovimentacao;
+
 public class MovimentacaoDTO implements Serializable{
 	
 	/**
@@ -13,7 +15,33 @@ public class MovimentacaoDTO implements Serializable{
 	private double entradas;
 	private double saidas;
 	private double total;
+	private double totalMovimentacao;
+	private Integer tipoMovimentacao;
 	
+	
+	public MovimentacaoDTO() {
+		
+	}
+	
+	
+	public MovimentacaoDTO(String mes, int mesNumerico, double entradas, double saidas, double total) {
+		this.mes = mes;
+		this.mesNumerico = mesNumerico;
+		this.entradas = entradas;
+		this.saidas = saidas;
+		this.total = total;
+	}
+	
+	public MovimentacaoDTO(TipoMovimentacao tipoMovimentacao, double totalMovimentacao, int mesNumerico) {
+		
+		this.tipoMovimentacao = tipoMovimentacao.getId();
+		this.totalMovimentacao = totalMovimentacao;
+		this.mesNumerico = mesNumerico;
+		
+		
+		
+	}
+
 	public String getMes() {
 		return mes;
 	}
@@ -43,6 +71,26 @@ public class MovimentacaoDTO implements Serializable{
 	}
 	public void setMesNumerico(int mesNumerico) {
 		this.mesNumerico = mesNumerico;
+	}
+
+
+	public double getTotalMovimentacao() {
+		return totalMovimentacao;
+	}
+
+
+	public void setTotalMovimentacao(double totalMovimentacao) {
+		this.totalMovimentacao = totalMovimentacao;
+	}
+
+
+	public int getTipoMovimentacao() {
+		return tipoMovimentacao;
+	}
+
+
+	public void setTipoMovimentacao(int tipoMovimentacao) {
+		this.tipoMovimentacao = tipoMovimentacao;
 	}
 
 }

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dg.gestao.repository.SituacaoClienteRepository;
+import com.dg.gestao.repositories.SituacaoClienteRepository;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 

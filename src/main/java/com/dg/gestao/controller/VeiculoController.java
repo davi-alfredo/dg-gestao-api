@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dg.gestao.model.VeiculoModel;
-import com.dg.gestao.repository.VeiculoRepository;
+import com.dg.gestao.entities.Veiculo;
+import com.dg.gestao.repositories.VeiculoRepository;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -55,14 +55,14 @@ public class VeiculoController {
 	@Operation(description = "Adicionar um novo veículo")
 	@ResponseStatus(code = HttpStatus.CREATED)
 	@PostMapping(value="/veiculos")
-	public ResponseEntity<?> addVeiculo(@RequestBody final VeiculoModel veiculo) {
+	public ResponseEntity<?> addVeiculo(@RequestBody final Veiculo veiculo) {
 		return new ResponseEntity<>(repository.save(veiculo), HttpStatus.CREATED);
 	}
 	
 	@Operation(description = "Atualizar um Veículo")
 	@ResponseStatus(code = HttpStatus.OK)
 	@PutMapping(value="/veiculos")
-	public ResponseEntity<?> updateVeiculo(@RequestBody final VeiculoModel veiculo) {
+	public ResponseEntity<?> updateVeiculo(@RequestBody final Veiculo veiculo) {
 		try {
 			if(repository.existsById(veiculo.getId()))
 				return new ResponseEntity<>(repository.save(veiculo), HttpStatus.OK);

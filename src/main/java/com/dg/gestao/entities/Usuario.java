@@ -1,4 +1,4 @@
-package com.dg.gestao.model;
+package com.dg.gestao.entities;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name="usuario")
-public class UsuarioModel implements Serializable{
+public class Usuario implements Serializable{
 	
 	/**
 	 * 

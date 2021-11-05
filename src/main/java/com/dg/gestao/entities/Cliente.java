@@ -1,6 +1,5 @@
-package com.dg.gestao.model;
+package com.dg.gestao.entities;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -28,13 +27,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 //@JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, 
 //	property  = "cliente_id", 
 //	scope     = UUID.class)
-public class ClienteModel implements Serializable{
+public class Cliente{
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
+	
 	@Id
 	@Column(name="cliente_id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -79,7 +74,7 @@ public class ClienteModel implements Serializable{
 	private boolean ativo;
 	
 	@OneToOne
-	private SituacaoClienteModel situacaoCliente;
+	private SituacaoCliente situacaoCliente;
 	
 	
 	@Column(name = "updated_at")
@@ -97,12 +92,12 @@ public class ClienteModel implements Serializable{
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "cliente")	
 	@JsonIgnore
-	private List<MovimentacaoFinanceiraModel> movimentacoesFinanceiras;
+	private List<MovimentacaoFinanceira> movimentacoesFinanceiras;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "cliente")	
 	//@JsonBackReference//(value = "cliente-locacoes")
 	@JsonIgnore
-	private List<LocacaoModel> locacoes;
+	private List<Locacao> locacoes;
 	
 	public String getUrlImagem() {
 		return urlImagem;
@@ -224,19 +219,19 @@ public class ClienteModel implements Serializable{
 		this.dataAtualizacao = dataAtualizacao;
 	}
 
-	public List<MovimentacaoFinanceiraModel> getMovimentacoesFinanceiras() {
+	public List<MovimentacaoFinanceira> getMovimentacoesFinanceiras() {
 		return movimentacoesFinanceiras;
 	}
 	
-	public void setMovimentacoesFinanceiras(List<MovimentacaoFinanceiraModel> movimentacoesFinanceiras) {
+	public void setMovimentacoesFinanceiras(List<MovimentacaoFinanceira> movimentacoesFinanceiras) {
 		this.movimentacoesFinanceiras = movimentacoesFinanceiras;
 	}
 
-	public List<LocacaoModel> getLocacoes() {
+	public List<Locacao> getLocacoes() {
 		return locacoes;
 	}
 
-	public void setLocacoes(List<LocacaoModel> locacoes) {
+	public void setLocacoes(List<Locacao> locacoes) {
 		this.locacoes = locacoes;
 	}
 
@@ -248,11 +243,11 @@ public class ClienteModel implements Serializable{
 		this.apelido = apelido;
 	}
 
-	public SituacaoClienteModel getSituacaoCliente() {
+	public SituacaoCliente getSituacaoCliente() {
 		return situacaoCliente;
 	}
 
-	public void setSituacaoCliente(SituacaoClienteModel situacaoCliente) {
+	public void setSituacaoCliente(SituacaoCliente situacaoCliente) {
 		this.situacaoCliente = situacaoCliente;
 	}
 

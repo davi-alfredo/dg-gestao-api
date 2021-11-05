@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dg.gestao.dto.ResponseDTO;
-import com.dg.gestao.repository.SituacaoPagamentoRepository;
+import com.dg.gestao.repositories.SituacaoPagamentoRepository;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 

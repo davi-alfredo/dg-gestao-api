@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dg.gestao.model.LocacaoModel;
-import com.dg.gestao.repository.LocacaoRepository;
+import com.dg.gestao.entities.Locacao;
+import com.dg.gestao.repositories.LocacaoRepository;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -49,14 +49,14 @@ public class LocacaoController {
 	}
 	
 	@PostMapping(value="/locacoes")
-	public ResponseEntity<?> addLocacao(@RequestBody final LocacaoModel locacao) {
+	public ResponseEntity<?> addLocacao(@RequestBody final Locacao locacao) {
 		return  new ResponseEntity<>(repository.save(locacao), HttpStatus.CREATED);
 	}	
 	
 	@Operation(description = "Atualizar uma Locação")
 	@ResponseStatus(code = HttpStatus.OK)
 	@PutMapping(value="/locacoes")
-	public ResponseEntity<?> updateVeiculo(@RequestBody final LocacaoModel locacao ) {
+	public ResponseEntity<?> updateVeiculo(@RequestBody final Locacao locacao ) {
 		try {
 			if(repository.existsById(locacao.getId()))
 				return new ResponseEntity<>(repository.save(locacao), HttpStatus.OK);

@@ -1,4 +1,4 @@
-package com.dg.gestao.service;
+package com.dg.gestao.services;
 
 public class VeiculoService {
 

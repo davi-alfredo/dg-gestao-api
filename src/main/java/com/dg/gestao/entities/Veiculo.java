@@ -1,6 +1,5 @@
-package com.dg.gestao.model;
+package com.dg.gestao.entities;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -28,13 +27,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 //@JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, 
 //property  = "veiculo_id", 
 //scope     = UUID.class)
-public class VeiculoModel implements Serializable{
+public class Veiculo{
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
 	@Id
 	@Column(name="veiculo_id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -100,15 +94,15 @@ public class VeiculoModel implements Serializable{
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "veiculo")
 	//@JsonBackReference//(value = "veiculo-movimentacoes")
 	@JsonIgnore
-	private List<MovimentacaoFinanceiraModel> movimentacoesFinanceiras;
+	private List<MovimentacaoFinanceira> movimentacoesFinanceiras;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "veiculo")	
 	//@JsonBackReference//(value = "cliente-locacoes")
 	@JsonIgnore
-	private List<LocacaoModel> locacoes;
+	private List<Locacao> locacoes;
 	
 	@OneToOne
-	private SituacaoVeiculoModel situacaoVeiculo;
+	private SituacaoVeiculo situacaoVeiculo;
 	
 	public String getUrlImagem() {
 		return urlImagem;
@@ -214,11 +208,11 @@ public class VeiculoModel implements Serializable{
 		this.valorVenda = valorVenda;
 	}
 
-	public List<MovimentacaoFinanceiraModel> getMovimentacoesFinanceiras() {
+	public List<MovimentacaoFinanceira> getMovimentacoesFinanceiras() {
 		return movimentacoesFinanceiras;
 	}
 
-	public void setMovimentacoesFinanceiras(List<MovimentacaoFinanceiraModel> movimentacoesFinanceiras) {
+	public void setMovimentacoesFinanceiras(List<MovimentacaoFinanceira> movimentacoesFinanceiras) {
 		this.movimentacoesFinanceiras = movimentacoesFinanceiras;
 	}
 
@@ -254,19 +248,19 @@ public class VeiculoModel implements Serializable{
 		this.renavam = renavam;
 	}
 
-	public List<LocacaoModel> getLocacoes() {
+	public List<Locacao> getLocacoes() {
 		return locacoes;
 	}
 
-	public void setLocacoes(List<LocacaoModel> locacoes) {
+	public void setLocacoes(List<Locacao> locacoes) {
 		this.locacoes = locacoes;
 	}
 
-	public SituacaoVeiculoModel getSituacaoVeiculo() {
+	public SituacaoVeiculo getSituacaoVeiculo() {
 		return situacaoVeiculo;
 	}
 
-	public void setSituacaoVeiculo(SituacaoVeiculoModel situacaoVeiculo) {
+	public void setSituacaoVeiculo(SituacaoVeiculo situacaoVeiculo) {
 		this.situacaoVeiculo = situacaoVeiculo;
 	}
 	

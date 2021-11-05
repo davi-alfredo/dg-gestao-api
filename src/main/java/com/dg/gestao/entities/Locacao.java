@@ -1,6 +1,5 @@
-package com.dg.gestao.model;
+package com.dg.gestao.entities;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -24,12 +23,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Table(name = "locacao")
 //@JsonIdentityInfo(generator = ObjectIdGenerators.UUIDGenerator.class, 
 	//property  = "id", scope     = UUID.class)
-public class LocacaoModel implements Serializable {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+public class Locacao {
 
 	@Id
 	@Column
@@ -41,13 +35,13 @@ public class LocacaoModel implements Serializable {
 	@JoinColumn(name="veiculo_id")
 	//@JsonManagedReference
 	//@JsonBackReference
-	private VeiculoModel veiculo;
+	private Veiculo veiculo;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="cliente_id")
 	//@JsonManagedReference
 	//@JsonBackReference
-	private ClienteModel cliente;
+	private Cliente cliente;
 	
 	@Column(name="ativo")
 	private boolean ativo;
@@ -87,19 +81,19 @@ public class LocacaoModel implements Serializable {
 		this.id = id;
 	}
 
-	public VeiculoModel getVeiculo() {
+	public Veiculo getVeiculo() {
 		return veiculo;
 	}
 
-	public void setVeiculo(VeiculoModel veiculo) {
+	public void setVeiculo(Veiculo veiculo) {
 		this.veiculo = veiculo;
 	}
 
-	public ClienteModel getCliente() {
+	public Cliente getCliente() {
 		return cliente;
 	}
 
-	public void setCliente(ClienteModel cliente) {
+	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
 

@@ -4,6 +4,7 @@ public class RetornoMovimentacaoDTO {
 	
 	private Integer tipoMovimentacao;
 	private Double valor;
+	
 	public Integer getTipoMovimentacao() {
 		return tipoMovimentacao;
 	}

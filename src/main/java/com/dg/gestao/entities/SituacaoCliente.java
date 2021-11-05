@@ -1,6 +1,4 @@
-package com.dg.gestao.model;
-
-import java.io.Serializable;
+package com.dg.gestao.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,14 +8,9 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tipo_movimentacao")
-public class TipoMovimentacaoModel implements Serializable{
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
+@Table(name = "situacao_cliente")
+public class SituacaoCliente {
+	
 	@Id
 	@Column
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -41,4 +34,5 @@ public class TipoMovimentacaoModel implements Serializable{
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
+
 }
