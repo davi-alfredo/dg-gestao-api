@@ -24,37 +24,37 @@ public interface MovimentacaoFinanceiraRepository extends JpaRepository<Moviment
 			   + "  GROUP BY obj.tipoMovimentacao")
 	List<SumMovimentacaoDTO>getTotaisAnual(int ano);
 
-	@Query(value = "SELECT * FROM movimentacao_financeira WHERE situacao_pagamento_id=?1 order by data_vencimento desc", nativeQuery = true )
+	@Query(value = "SELECT * FROM movimentacao_financeira WHERE situacao_pagamento_id=?1 ORDER BY data_vencimento desc", nativeQuery = true )
 	List<MovimentacaoFinanceira> getBySituacaoPagamento(int situacao);
 	
 	
-	@Query(value = "SELECT * FROM movimentacao_financeira order by data_vencimento desc limit 50", nativeQuery = true )
-	List<MovimentacaoFinanceira> getAllLimit();
+	@Query(value = "SELECT * FROM movimentacao_financeira WHERE situacao_pagamento_id = 1 ORDER BY data_vencimento desc limit 50", nativeQuery = true )
+	List<MovimentacaoFinanceira> getAllLimitPagos();
 	
-	@Query(value = "SELECT * FROM movimentacao_financeira WHERE tipo_movimentacao_id=?1 and situacao_pagamento_id < 3 order by data_vencimento desc limit 50", nativeQuery = true )
+	@Query(value = "SELECT * FROM movimentacao_financeira WHERE tipo_movimentacao_id=?1 and situacao_pagamento_id < 3 ORDER BY data_vencimento desc limit 50", nativeQuery = true )
 	List<MovimentacaoFinanceira> getByTipoMovimentacao(int tipoMovimentacao);
 	
-	@Query(value = "SELECT * FROM movimentacao_financeira WHERE situacao_pagamento_id > 1 order by data_vencimento desc", nativeQuery = true )
+	@Query(value = "SELECT * FROM movimentacao_financeira WHERE situacao_pagamento_id in(2,3) ORDER BY data_vencimento desc", nativeQuery = true )
 	List<MovimentacaoFinanceira> getComPendencia();
 	
-	@Query(value = "SELECT * FROM movimentacao_financeira WHERE situacao_pagamento_id = 1 order by data_vencimento desc", nativeQuery = true )
+	@Query(value = "SELECT * FROM movimentacao_financeira WHERE situacao_pagamento_id = 1 ORDER BY data_vencimento desc", nativeQuery = true )
 	List<MovimentacaoFinanceira> getPagos();
 
-	@Query(value = "SELECT * FROM movimentacao_financeira WHERE situacao_pagamento_id > 1 order by data_vencimento desc", nativeQuery = true )
+	@Query(value = "SELECT * FROM movimentacao_financeira WHERE situacao_pagamento_id > 1 ORDER BY data_vencimento desc", nativeQuery = true )
 	List<MovimentacaoFinanceira> getPendencias();
 	
-	@Query(value = "SELECT * FROM movimentacao_financeira WHERE veiculo_id=?1 and situacao_pagamento_id > 1 order by data_vencimento desc" , nativeQuery = true )
+	@Query(value = "SELECT * FROM movimentacao_financeira WHERE veiculo_id=?1 and situacao_pagamento_id > 1 ORDER BY data_vencimento desc" , nativeQuery = true )
 	List<MovimentacaoFinanceira> getPendenciasByVeiculo(UUID idVeiculo);
 	
-	@Query(value = "SELECT * FROM movimentacao_financeira WHERE cliente_id=?1 and situacao_pagamento_id > 1 order by data_vencimento desc", nativeQuery = true )
+	@Query(value = "SELECT * FROM movimentacao_financeira WHERE cliente_id=?1 and situacao_pagamento_id > 1 ORDER BY data_vencimento desc", nativeQuery = true )
 	List<MovimentacaoFinanceira> getPendenciasByCliente(UUID idCliente);
 	
-	@Query(value = "SELECT * FROM movimentacao_financeira WHERE veiculo_id=?1 order by data_vencimento desc" , nativeQuery = true )
+	@Query(value = "SELECT * FROM movimentacao_financeira WHERE veiculo_id=?1 ORDER BY data_vencimento desc" , nativeQuery = true )
 	List<MovimentacaoFinanceira> getByVeiculo(UUID idVeiculo);
 	
-	@Query(value = "SELECT * FROM movimentacao_financeira WHERE cliente_id=?1 order by data_vencimento desc", nativeQuery = true )
+	@Query(value = "SELECT * FROM movimentacao_financeira WHERE cliente_id=?1 ORDER BY data_vencimento desc", nativeQuery = true )
 	List<MovimentacaoFinanceira> getByCliente(UUID idCliente);
 
-	@Query(value= "SELECT * FROM movimentacao_financeira WHERE EXTRACT(YEAR FROM data_pagamento) =?1 and EXTRACT(MONTH FROM data_pagamento) =?2 order by data_vencimento desc", nativeQuery = true)
+	@Query(value= "SELECT * FROM movimentacao_financeira WHERE EXTRACT(YEAR FROM data_pagamento) =?1 and EXTRACT(MONTH FROM data_pagamento) =?2 ORDER BY data_vencimento desc", nativeQuery = true)
 	List<MovimentacaoFinanceira> getMovimentacoesByMonthAndYear(int ano, int mes);
 }
