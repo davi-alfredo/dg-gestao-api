@@ -23,7 +23,7 @@ public class ClienteService {
 	
 	
 	public List<ClienteDTO> findAll() {		
-		List<Cliente> result = repository.findAll(Sort.by(Sort.Direction.ASC, "dataCompra"));
+		List<Cliente> result = repository.findAll(Sort.by(Sort.Direction.ASC, "nome"));
 		return result.stream().map(cliente -> new ClienteDTO(cliente)).collect(Collectors.toList());
 	}
 	
