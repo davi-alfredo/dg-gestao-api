@@ -1,38 +1,43 @@
 package com.dg.gestao.config;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+@Configuration
+@EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	
-	@Override
-    protected void configure(HttpSecurity http) throws Exception {
-        CorsConfiguration corsConfiguration = new CorsConfiguration();
-        corsConfiguration.setAllowedHeaders(this.ListOf("Authorization,Cache-Control,Content-Type"));
-        corsConfiguration.setAllowedOrigins(this.ListOf("*"));
-        corsConfiguration.setAllowedMethods(this.ListOf("GET,POST,PUT,DELETE,PUT,OPTIONS,PATCH,DELETE"));
-        corsConfiguration.setAllowCredentials(true);
-        corsConfiguration.setExposedHeaders(this.ListOf("Authorization"));
-        
-        // You can customize the following part based on your project, it's only a sample
-        http.authorizeRequests().antMatchers("/**").permitAll().anyRequest()
-                .authenticated().and().csrf().disable().cors().configurationSource(request -> corsConfiguration);
+	@Autowired
+	private Environment env;
 
-    }
-	
-	
-	private List<String> ListOf(String itens){
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {		
+		if (Arrays.asList(env.getActiveProfiles()).contains("test")) {
+			http.headers().frameOptions().disable();
+		}
 		
-		String [] arrayItens = itens.split(",");
-		List<String> listaItens = new ArrayList<String>();
-		
-		for (int i = 0; i < arrayItens.length; i++) {
-			listaItens.add(arrayItens[i].trim());
-		}		
-		return listaItens;
+		http.cors().and().csrf().disable();
+		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		http.authorizeRequests().anyRequest().permitAll();
+	}
+
+	@Bean
+	CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration configuration = new CorsConfiguration().applyPermitDefaultValues();
+		configuration.setAllowedMethods(Arrays.asList("POST", "GET", "PUT", "DELETE", "OPTIONS"));
+		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", configuration);
+		return source;
 	}
 }

@@ -14,4 +14,7 @@ public interface VeiculoRepository extends JpaRepository<Veiculo, UUID> {
 	@Query(value = "SELECT * FROM veiculo WHERE situacao_veiculo_id=?1", nativeQuery = true )
 	List<Veiculo> getBySituacao(int idSituacao);
 
+	//@Query("SELECT v FROM Veiculo veiculo WHERE veiculo.situacao_veiculo_id = :situacaoVeiculo ")
+	//List<Veiculo> getBySituacao(@Param("situacaoVeiculo") int situacaoVeiculo);
+
 }

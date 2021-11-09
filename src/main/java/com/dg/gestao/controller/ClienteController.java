@@ -2,6 +2,8 @@ package com.dg.gestao.controller;
 
 import java.util.UUID;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,69 +21,69 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dg.gestao.entities.Cliente;
 import com.dg.gestao.repositories.ClienteRepository;
+import com.dg.gestao.services.ClienteService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @CrossOrigin
-@Tag(name="Clientes API", description = "API Clientes")
-@RequestMapping(value="/api")
+@Tag(name = "Clientes API", description = "API Clientes")
+@RequestMapping(value = "/api")
 public class ClienteController {
-	
-	@Autowired 
+
+	@Autowired
 	ClienteRepository repository;
-	
+
+	@Autowired
+	ClienteService service;
+
 	@Operation(description = "Obter Clientes Ativos")
 	@ResponseStatus(HttpStatus.OK)
-	@GetMapping(value="/clientes")
+	@GetMapping(value = "/clientes")
 	public ResponseEntity<?> getClientes() {
-		return new ResponseEntity<>(repository.findAll(), HttpStatus.OK);
+		return new ResponseEntity<>(service.findAll(), HttpStatus.OK);
 	}
 
 	@Operation(description = "Obter Cliente através do Id")
-	@GetMapping(value="/clientes/{id}")
+	@GetMapping(value = "/clientes/{id}")
 	public ResponseEntity<?> getCliente(@PathVariable final UUID id) {
 		try {
-			return new ResponseEntity<>(repository.getById(id), HttpStatus.OK);
-		}catch(JpaObjectRetrievalFailureException e) {
+			return new ResponseEntity<>(service.findById(id), HttpStatus.OK);
+		} catch (EntityNotFoundException e) {
 			return new ResponseEntity<>("Nenhum registro encontrado para o ID informado.", HttpStatus.NOT_FOUND);
 		}
 	}
-	
+
 	@Operation(description = "Obter Cliente através da situação")
-	@GetMapping(value="/clientes/situacao/{idSituacao}")
+	@GetMapping(value = "/clientes/situacao/{idSituacao}")
 	public ResponseEntity<?> getClientesBySituacao(@PathVariable final int idSituacao) {
-		return new ResponseEntity<>(repository.getBySituacao(idSituacao), HttpStatus.OK);		
+		return new ResponseEntity<>(service.getBySituacao(idSituacao), HttpStatus.OK);
 	}
-	
+
 	@Operation(description = "Adicionar um novo cliente")
-	@PostMapping(value="/clientes")
+	@PostMapping(value = "/clientes")
 	public ResponseEntity<?> addCliente(@RequestBody final Cliente cliente) {
-		return new ResponseEntity<>(repository.save(cliente), HttpStatus.CREATED);
+		return new ResponseEntity<>(service.save(cliente), HttpStatus.CREATED);
 	}
-	
+
 	@Operation(description = "Atualizar um cliente")
-	@DeleteMapping(value="/clientes/{id}")
-	public ResponseEntity<?> removeCliente(@PathVariable final UUID id) {	
+	@DeleteMapping(value = "/clientes/{id}")
+	public ResponseEntity<?> removeCliente(@PathVariable final UUID id) {
 		try {
-			Cliente model = repository.getById(id);
-			repository.delete(model);
+			repository.deleteById(id);
 			return new ResponseEntity<>("Removido com sucesso!", HttpStatus.OK);
-		}catch(JpaObjectRetrievalFailureException e) {
+		} catch (JpaObjectRetrievalFailureException e) {
 			return new ResponseEntity<>("Nenhum registro encontrado para o ID informado.", HttpStatus.NOT_FOUND);
 		}
 	}
-	
+
 	@Operation(description = "Atualizar um cliente")
-	@PutMapping(value="/clientes")
+	@PutMapping(value = "/clientes")
 	public ResponseEntity<?> updateCliente(@RequestBody final Cliente cliente) {
-		try {		
-			if(repository.existsById(cliente.getId()))
-				return new ResponseEntity<>(repository.save(cliente), HttpStatus.OK);
-			else 
-				return new ResponseEntity<>("Nenhum registro encontrado para o ID informado.", HttpStatus.NOT_FOUND);
-		}catch(JpaObjectRetrievalFailureException e) {
+		try {
+			return new ResponseEntity<>(service.updateCliente(cliente), HttpStatus.OK);
+		} catch (EntityNotFoundException e) {
 			return new ResponseEntity<>("Nenhum registro encontrado para o ID informado.", HttpStatus.NOT_FOUND);
 		}
 	}

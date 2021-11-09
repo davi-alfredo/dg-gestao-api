@@ -26,6 +26,17 @@ public class SituacaoVeiculo implements Serializable{
 	@Column(length = 100, nullable = false)
 	private String descricao;
 
+	public SituacaoVeiculo() {
+		
+	}
+	
+	
+	public SituacaoVeiculo(Integer id, String descricao) {
+		this.id = id;
+		this.descricao = descricao;
+	}
+
+
 	public Integer getId() {
 		return id;
 	}

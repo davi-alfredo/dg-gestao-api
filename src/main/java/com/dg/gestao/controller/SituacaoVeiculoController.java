@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dg.gestao.repositories.SituacaoVeiculoRepository;
+import com.dg.gestao.services.SituacaoVeiculoService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -19,11 +19,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 public class SituacaoVeiculoController {
 	
 	@Autowired 
-	SituacaoVeiculoRepository repository;
+	SituacaoVeiculoService service;
 	
 	@GetMapping(value="/situacoes-veiculo")
 	public ResponseEntity<?> getSituacoesVeiculo() {		
-		return new ResponseEntity<>(repository.findAll(), HttpStatus.OK);
+		return new ResponseEntity<>(service.findAll(), HttpStatus.OK);
 	}
 
 }

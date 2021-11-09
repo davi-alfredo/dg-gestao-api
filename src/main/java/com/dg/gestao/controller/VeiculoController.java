@@ -2,8 +2,9 @@ package com.dg.gestao.controller;
 
 import java.util.UUID;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.orm.jpa.JpaObjectRetrievalFailureException;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dg.gestao.entities.Veiculo;
 import com.dg.gestao.repositories.VeiculoRepository;
+import com.dg.gestao.services.VeiculoService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -33,20 +35,24 @@ public class VeiculoController {
 	@Autowired 
 	VeiculoRepository repository;
 	
+	@Autowired
+	VeiculoService service;
+	
+	
 	@Operation(description = "Obter Veículos Ativos")
 	@ResponseStatus(code = HttpStatus.OK)
 	@GetMapping(value="/veiculos")
-	public ResponseEntity<?> getVeiculos() {		
-		return new ResponseEntity<>(repository.findAll(Sort.by(Sort.Direction.ASC, "fabricante")), HttpStatus.OK);
+	public ResponseEntity<?> findAll() {		
+		return new ResponseEntity<>(service.findAll(), HttpStatus.OK);
 	}
 
 	@Operation(description = "Obter Veículo através do Id")
 	@ResponseStatus(code = HttpStatus.OK)
 	@GetMapping(value="/veiculos/{id}")
-	public ResponseEntity<?> getVeiculo(@PathVariable UUID id) {
+	public ResponseEntity<?> getById(@PathVariable UUID id) {
 		try {
-			return new ResponseEntity<>(repository.getById(id), HttpStatus.OK);
-		}catch(JpaObjectRetrievalFailureException e) {
+			return new ResponseEntity<>(service.findById(id), HttpStatus.OK);
+		}catch(EntityNotFoundException e) {
 			return new ResponseEntity<>("Nenhum registro encontrado para o ID informado.", HttpStatus.NOT_FOUND);
 		}
 	}
@@ -56,7 +62,7 @@ public class VeiculoController {
 	@ResponseStatus(code = HttpStatus.CREATED)
 	@PostMapping(value="/veiculos")
 	public ResponseEntity<?> addVeiculo(@RequestBody final Veiculo veiculo) {
-		return new ResponseEntity<>(repository.save(veiculo), HttpStatus.CREATED);
+		return new ResponseEntity<>(service.save(veiculo), HttpStatus.CREATED);
 	}
 	
 	@Operation(description = "Atualizar um Veículo")
@@ -64,10 +70,7 @@ public class VeiculoController {
 	@PutMapping(value="/veiculos")
 	public ResponseEntity<?> updateVeiculo(@RequestBody final Veiculo veiculo) {
 		try {
-			if(repository.existsById(veiculo.getId()))
-				return new ResponseEntity<>(repository.save(veiculo), HttpStatus.OK);
-			else
-				return new ResponseEntity<>("Nenhum registro encontrado para o ID informado.", HttpStatus.NOT_FOUND);	
+			return new ResponseEntity<>(service.updateVeiculo(veiculo), HttpStatus.OK);
 		}catch(JpaObjectRetrievalFailureException e) {
 			return new ResponseEntity<>("Nenhum registro encontrado para o ID informado.", HttpStatus.NOT_FOUND);
 		}		
@@ -89,6 +92,6 @@ public class VeiculoController {
 	@ResponseStatus(code = HttpStatus.OK)
 	@GetMapping(value="/veiculos/situacao/{idSituacao}")
 	public ResponseEntity<?> getVeiculosBySituacao(@PathVariable int idSituacao) {	
-		return new ResponseEntity<>(repository.getBySituacao(idSituacao), HttpStatus.OK);
+		return new ResponseEntity<>(service.getBySituacao(idSituacao), HttpStatus.OK);
 	}
 }

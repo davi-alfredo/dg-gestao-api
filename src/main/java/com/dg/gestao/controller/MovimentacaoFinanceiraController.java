@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dg.gestao.dto.MovimentacaoDTO;
 import com.dg.gestao.entities.MovimentacaoFinanceira;
 import com.dg.gestao.repositories.MovimentacaoFinanceiraRepository;
 import com.dg.gestao.services.MovimentacaoFinanceiraService;
@@ -60,61 +59,25 @@ public class MovimentacaoFinanceiraController {
 	@Operation(description = "Obter movimentações financeiras")
 	@GetMapping(value="/movimentacoes/consolidado/{ano}")
 	public ResponseEntity<?> getConsolidadoAnual(@PathVariable int ano) {
-		List<MovimentacaoDTO> retorno = service.obterMovimentacaoAnual(ano);
-		return new ResponseEntity<>(retorno, HttpStatus.OK);
+		return new ResponseEntity<>(service.getMovimentacaoByYear(ano), HttpStatus.OK);
 	}
-
-	
-	@Operation(description = "Obter movimentações financeiras")
-	@GetMapping(value="/movimentacoes/consolidado-2/{ano}")
-	public ResponseEntity<?> getMovimentacaoAgrupada(@PathVariable int ano) {
-		List<MovimentacaoDTO> retorno = service.getMovimentacaoAgrupada(ano);
-		return new ResponseEntity<>(retorno, HttpStatus.OK);
-	}
-	
 	
 	@Operation(description = "Obter movimentações financeiras por ano e mes")
 	@GetMapping(value="/movimentacoes/ano/{ano}/mes/{mes}")
 	public ResponseEntity<?> getPorAnoMes(@PathVariable int ano, @PathVariable int mes) {
-		List<MovimentacaoFinanceira> retorno = repository.getByAnoMes(ano, mes);
-		return new ResponseEntity<>(retorno, HttpStatus.OK);
-	}
-
-	
-	@Operation(description = "Obter movimentações financeiras")
-	@GetMapping(value="/movimentacoes/totais/{ano}")
-	public ResponseEntity<?> getTotaisAnual(@PathVariable int ano) {
-		MovimentacaoDTO retorno = service.obterMovimentacaoTotaisAnual(ano);
-		return new ResponseEntity<>(retorno, HttpStatus.OK);
+		return new ResponseEntity<>(service.getMovimentacoesByMonthAndYear(ano, mes), HttpStatus.OK);
 	}
 	
 	@Operation(description = "Obter movimentações Por Situação do Pagamento")
 	@GetMapping(value="/movimentacoes/situacao/{situacao}")
 	public ResponseEntity<?> getPorSituacao(@PathVariable int situacao) {
-		List<MovimentacaoFinanceira> retorno = null;
-		if (situacao == 0)
-			retorno = repository.findAll(Sort.by(Sort.Direction.DESC, "dataVencimento"));
-		else 
-			retorno = repository.getBySituacaoPagamento(situacao);
-		
-			
-		
-		return new ResponseEntity<>(retorno, HttpStatus.OK);
+		return new ResponseEntity<>(service.getMovimentacoesBySituacaoPagamento(situacao), HttpStatus.OK);
 	}
 	
 	@Operation(description = "Obter movimentações Por Tipo de Movimentação")
 	@GetMapping(value="/movimentacoes/tipo-movimentacao/{tipoMovimentacao}")
-	public ResponseEntity<?> getPorTipoMovimentacao(@PathVariable int tipoMovimentacao) {
-		List<MovimentacaoFinanceira> retorno = null;
-		////retorno = repository.findAll(Sort.by(Sort.Direction.DESC, "dataVencimento"));
-		if (tipoMovimentacao == 0)
-			retorno = repository.getAllLimit();
-		else 
-			retorno = repository.getByTipoMovimentacao(tipoMovimentacao);
-		
-			
-		
-		return new ResponseEntity<>(retorno, HttpStatus.OK);
+	public ResponseEntity<?> getByTipoMovimentacao(@PathVariable int tipoMovimentacao) {
+		return new ResponseEntity<>(service.getMovimentacoesByTipoMovimentacao(tipoMovimentacao), HttpStatus.OK);
 	}
 	
 	@Operation(description = "Obter movimentações Com alguma Pendencia")
@@ -136,7 +99,7 @@ public class MovimentacaoFinanceiraController {
 	@GetMapping(value="/movimentacoes/veiculos/{id}")
 	public ResponseEntity<?> getMovimentacoesVeiculo(@PathVariable UUID id) {
 		try {
-			return new ResponseEntity<>(repository.getByVeiculo(id), HttpStatus.OK);
+			return new ResponseEntity<>(service.getMovimentacoesByVeiculo(id), HttpStatus.OK);
 		}catch(JpaObjectRetrievalFailureException e) {
 			return new ResponseEntity<>("Nenhum registro encontrado para o ID informado.", HttpStatus.NOT_FOUND);
 		}
@@ -147,7 +110,7 @@ public class MovimentacaoFinanceiraController {
 	@GetMapping(value="/movimentacoes/clientes/{id}")
 	public ResponseEntity<?> getMovimentacoesCliente(@PathVariable UUID id) {
 		try {
-			return new ResponseEntity<>(repository.getByCliente(id), HttpStatus.OK);
+			return new ResponseEntity<>(service.getMovimentacoesByCliente(id), HttpStatus.OK);
 		}catch(JpaObjectRetrievalFailureException e) {
 			return new ResponseEntity<>("Nenhum registro encontrado para o ID informado.", HttpStatus.NOT_FOUND);
 		}
@@ -158,7 +121,7 @@ public class MovimentacaoFinanceiraController {
 	@GetMapping(value="/movimentacoes/veiculos/{id}/pendentes")
 	public ResponseEntity<?> getMovimentacoesPendentesVeiculo(@PathVariable UUID id) {
 		try {
-			return new ResponseEntity<>(repository.getPendenciasByVeiculo(id), HttpStatus.OK);
+			return new ResponseEntity<>(service.getPendenciasByVeiculo(id), HttpStatus.OK);
 		}catch(JpaObjectRetrievalFailureException e) {
 			return new ResponseEntity<>("Nenhum registro encontrado para o ID informado.", HttpStatus.NOT_FOUND);
 		}
@@ -169,7 +132,7 @@ public class MovimentacaoFinanceiraController {
 	@GetMapping(value="/movimentacoes/clientes/{id}/pendentes")
 	public ResponseEntity<?> getMovimentacoesPendentesCliente(@PathVariable UUID id) {
 		try {
-			return new ResponseEntity<>(repository.getPendenciasByCliente(id), HttpStatus.OK);
+			return new ResponseEntity<>(service.getPendenciasByCliente(id), HttpStatus.OK);
 		}catch(JpaObjectRetrievalFailureException e) {
 			return new ResponseEntity<>("Nenhum registro encontrado para o ID informado.", HttpStatus.NOT_FOUND);
 		}
@@ -178,17 +141,19 @@ public class MovimentacaoFinanceiraController {
 	@Operation(description = "Adicionar uma nova Movimentação Financeira")
 	@PostMapping(value="/movimentacoes")
 	public ResponseEntity<?> addMovimentacao(@RequestBody MovimentacaoFinanceira movimentacaoFinanceiraModel) {
-		return new ResponseEntity<>(repository.save(movimentacaoFinanceiraModel), HttpStatus.CREATED);
+		try {
+			return new ResponseEntity<>(service.save(movimentacaoFinanceiraModel), HttpStatus.CREATED);
+		}catch (Exception e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_GATEWAY);
+		}
 	}
 
 	@Operation(description = "Atualizar uma movimentação")
 	@PutMapping(value="/movimentacoes")
 	public ResponseEntity<?> updateCliente(@RequestBody final MovimentacaoFinanceira movimentacao) {
 		try {		
-			if(repository.existsById(movimentacao.getId()))
-				return new ResponseEntity<>(repository.save(movimentacao), HttpStatus.OK);
-			else 
-				return new ResponseEntity<>("Nenhum registro encontrado para o ID informado.", HttpStatus.NOT_FOUND);
+		
+			return new ResponseEntity<>(service.update(movimentacao), HttpStatus.OK);
 		}catch(JpaObjectRetrievalFailureException e) {
 			return new ResponseEntity<>("Nenhum registro encontrado para o ID informado.", HttpStatus.NOT_FOUND);
 		}
@@ -204,6 +169,5 @@ public class MovimentacaoFinanceiraController {
 		}catch(JpaObjectRetrievalFailureException e) {
 			return new ResponseEntity<>("Nenhum registro encontrado para o ID informado.", HttpStatus.NOT_FOUND);
 		}
-	}
-	
+	}	
 }

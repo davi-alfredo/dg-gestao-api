@@ -19,7 +19,7 @@ import com.google.gson.Gson;
 
 
 
-//@Component
+@Component
 public class FilterRequests implements Filter{
 
 	 

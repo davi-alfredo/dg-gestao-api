@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dg.gestao.dto.ResponseDTO;
-import com.dg.gestao.repositories.TipoPagamentoRepository;
+import com.dg.gestao.services.TipoPagamentoService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -23,17 +23,17 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 public class TipoPagamentoController {
 	
 	@Autowired 
-	TipoPagamentoRepository repository;
+	TipoPagamentoService service;
 	
 	@GetMapping(value="/tipos-pagamento")
 	public ResponseEntity<?> getTiposPagamento() {		
-		return new ResponseEntity<>(repository.findAll(), HttpStatus.OK);
+		return new ResponseEntity<>(service.findAll(), HttpStatus.OK);
 	}
 
 	@GetMapping(value="/tipos-pagamento/{id}")
 	public ResponseEntity<?> getTipoPagamento(@PathVariable int id) {
 		try {
-			return new ResponseEntity<>(repository.getById(id), HttpStatus.OK);
+			return new ResponseEntity<>(service.getById(id), HttpStatus.OK);
 		}catch(EntityNotFoundException e) {
 			return new ResponseEntity<>(new ResponseDTO("Nenhum registro encontrado para o ID informado."), HttpStatus.NOT_FOUND);
 		}

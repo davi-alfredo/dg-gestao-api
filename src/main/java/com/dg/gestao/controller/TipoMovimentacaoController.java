@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dg.gestao.repositories.TipoMovimentacaoRepository;
+import com.dg.gestao.services.TipoMovimentacaoService;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 
@@ -19,10 +19,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 public class TipoMovimentacaoController {
 	
 	@Autowired 
-	TipoMovimentacaoRepository repository;
+	TipoMovimentacaoService service;
 	
 	@GetMapping(value="/tipos-movimentacao")
 	public ResponseEntity<?> getTiposMovimentacao() {		
-		return new ResponseEntity<>(repository.findAll(), HttpStatus.OK);
+		return new ResponseEntity<>(service.findAll(), HttpStatus.OK);
 	}	
 }
