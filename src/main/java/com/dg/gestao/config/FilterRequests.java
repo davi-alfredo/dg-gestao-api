@@ -35,10 +35,10 @@ public class FilterRequests implements Filter{
 		String path = req.getRequestURI();
 		
 		HttpServletResponse novoResponse = (HttpServletResponse) response;
-		novoResponse.addHeader("Access-Control-Allow-Origin", "*");
-		novoResponse.addHeader("Access-Control-Allow-Headers", "origin, Content-Type, Accept, authorization");
-		novoResponse.addHeader("Access-Control-Allow-Credentials", "true");
-		novoResponse.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD");
+//		novoResponse.addHeader("Access-Control-Allow-Origin", "*");
+//		novoResponse.addHeader("Access-Control-Allow-Headers", "origin, Content-Type, Accept, authorization");
+//		novoResponse.addHeader("Access-Control-Allow-Credentials", "true");
+//		novoResponse.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD");
 		
 		System.out.println("####### PASSOU AQUI 1 #########");
         if(path.startsWith("/api") == false){
