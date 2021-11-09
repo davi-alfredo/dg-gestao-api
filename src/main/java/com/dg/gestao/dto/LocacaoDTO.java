@@ -26,13 +26,14 @@ public class LocacaoDTO implements Serializable{
 	}
 
 	public LocacaoDTO(Locacao entity) {
-		this.veiculo = new VeiculoDTO(entity.getVeiculo());
-		this.cliente = new ClienteDTO(entity.getCliente());
-		this.ativo = entity.isAtivo();
-		this.dataInicio = entity.getDataInicio();
-		this.dataTermino = entity.getDataTermino();
-		this.observacao = entity.getObservacao();
-		this.valor = entity.getValor();
+		id = entity.getId();
+		veiculo = new VeiculoDTO(entity.getVeiculo());
+		cliente = new ClienteDTO(entity.getCliente());
+		ativo = entity.isAtivo();
+		dataInicio = entity.getDataInicio();
+		dataTermino = entity.getDataTermino();
+		observacao = entity.getObservacao();
+		valor = entity.getValor();
 	}
 
 	public UUID getId() {
