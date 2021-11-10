@@ -4,8 +4,11 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.UUID;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.dg.gestao.entities.Cliente;
 import com.dg.gestao.entities.SituacaoCliente;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class ClienteDTO implements Serializable {	
 	
@@ -18,6 +21,9 @@ public class ClienteDTO implements Serializable {
 	private String nome;
 	private String apelido;private String rg;
 	private String cpf;
+
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+	@DateTimeFormat(pattern="dd/MM/yyyy")	
 	private LocalDate dataNascimento;
 	private String endereco;
 	private String bairro;

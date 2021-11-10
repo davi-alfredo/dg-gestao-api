@@ -3,7 +3,10 @@ package com.dg.gestao.dto;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.dg.gestao.entities.MovimentacaoFinanceira;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class MovimentacaoFinanceiraDTO implements Serializable{
 
@@ -17,9 +20,16 @@ public class MovimentacaoFinanceiraDTO implements Serializable{
 	private VeiculoDTO veiculo;	
 	private TipoMovimentacaoDTO tipoMovimentacao;	
 	private TipoPagamentoDTO tipoPagamento;		
-	private SituacaoPagamentoDTO situacaoPagamento;	
+	private SituacaoPagamentoDTO situacaoPagamento;
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+	@DateTimeFormat(pattern="dd/MM/yyyy")	
 	private LocalDate dataVencimento;	
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+	@DateTimeFormat(pattern="dd/MM/yyyy")
 	private LocalDate dataPagamento;
+	
 	private Double valor;
 	private Double valorPago;
 	

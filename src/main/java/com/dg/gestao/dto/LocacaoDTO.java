@@ -4,7 +4,10 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.UUID;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.dg.gestao.entities.Locacao;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class LocacaoDTO implements Serializable{
 	/**
@@ -16,10 +19,16 @@ public class LocacaoDTO implements Serializable{
 	private VeiculoDTO veiculo;
 	private ClienteDTO cliente;
 	private boolean ativo;
-	private LocalDate dataInicio;
-	private LocalDate dataTermino;
 	private String observacao;
 	private Double valor;
+		  
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+	@DateTimeFormat(pattern="dd/MM/yyyy")	
+	private LocalDate dataInicio;
+
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+	@DateTimeFormat(pattern="dd/MM/yyyy")	
+	private LocalDate dataTermino;
 	
 	public LocacaoDTO() {
 		

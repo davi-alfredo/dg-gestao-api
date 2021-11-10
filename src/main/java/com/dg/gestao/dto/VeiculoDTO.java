@@ -4,7 +4,10 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.UUID;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.dg.gestao.entities.Veiculo;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class VeiculoDTO implements Serializable{
 
@@ -21,7 +24,13 @@ public class VeiculoDTO implements Serializable{
 	private Double valorVenda;
 	private Double valorFIPE;
 	private boolean ativo;
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+	@DateTimeFormat(pattern="dd/MM/yyyy")	
 	private LocalDate dataCompra;
+
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
+	@DateTimeFormat(pattern="dd/MM/yyyy")	
 	private LocalDate dataVenda;
 	private String renavam;
 	private String urlImagem;
