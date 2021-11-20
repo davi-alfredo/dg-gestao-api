@@ -58,7 +58,7 @@ public class MovimentacaoFinanceiraService {
 		MovimentacaoMensalDTO movimentacao = null;
 		 
 
-		for (int j = 1; j < 12; j++) {
+		for (int j = 1; j <= 12; j++) {
 			for (int i = 0; i < movimentacoes.size(); i++) {
 
 				if (movimentacoes.get(i).getMes() == j) {
