@@ -40,7 +40,6 @@ public class FilterRequests implements Filter{
 //		novoResponse.addHeader("Access-Control-Allow-Credentials", "true");
 //		novoResponse.addHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS, HEAD");
 		
-		System.out.println("####### PASSOU AQUI 1 #########");
         if(path.startsWith("/api") == false){
             chain.doFilter(request, novoResponse);
             return;
@@ -48,12 +47,8 @@ public class FilterRequests implements Filter{
 		
 		
 		String token = req.getHeader("Token");
-		System.out.println("####### TOKEN: "+token+" #########");
-		if(req.getHeader("Token") != null && FirebaseAuthenticationProvider.tokenIsValid(token)) {
-			System.out.println("####### PASSOU AQUI 2 #########");
-			chain.doFilter(request, novoResponse);
-			System.out.println("####### PASSOU AQUI 3 #########");
-
+		if(req.getHeader("Token") != null && FirebaseAuthenticationProvider.tokenIsValid(token)) {			
+			chain.doFilter(request, novoResponse);			
 		}else {			
 			System.out.println("####### PASSOU AQUI 4 #########");
 
@@ -66,8 +61,6 @@ public class FilterRequests implements Filter{
             novoResponse.setCharacterEncoding("UTF-8");
             out.print(this.gson.toJson(respDto));
             out.flush();
-    		System.out.println("####### PASSOU AQUI 5 #########");
-
 
 		}	
 		

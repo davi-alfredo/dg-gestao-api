@@ -36,14 +36,14 @@ public class ClienteService {
 		}
 	}
 	
-	public ClienteDTO save(Cliente veiculo) {
-		return new ClienteDTO(repository.save(veiculo));	
+	public ClienteDTO save(Cliente cliente) {
+		return new ClienteDTO(repository.save(cliente));	
 	}
 	
-	public ClienteDTO updateCliente(final Cliente veiculo) {
+	public ClienteDTO updateCliente(final Cliente cliente) {
 		try {
-			repository.existsById(veiculo.getId());
-			return new ClienteDTO(repository.save(veiculo));
+			repository.existsById(cliente.getId());
+			return new ClienteDTO(repository.save(cliente));
 		}catch(JpaObjectRetrievalFailureException e) {
 			throw new EntityNotFoundException("Nenhum registro encontrado para o ID informado.");
 		}
@@ -51,6 +51,6 @@ public class ClienteService {
 
 	public Object getBySituacao(int idSituacao) {
 		List<Cliente> result = repository.getBySituacao(idSituacao);		
-		return result.stream().map(veiculo -> new ClienteDTO(veiculo)).collect(Collectors.toList());
+		return result.stream().map(cliente -> new ClienteDTO(cliente)).collect(Collectors.toList());
 	}
 }
